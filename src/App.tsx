@@ -7,6 +7,7 @@ import { CameraInspectorModal } from './components/CameraInspectorModal';
 import { CheckoutModal } from './components/CheckoutModal';
 import { StudioQuoteModal } from './components/StudioQuoteModal';
 import { BlogModal } from './components/BlogModal';
+import { LegalModal, LegalTab } from './components/LegalModal';
 import { MobileBottomNav } from './components/MobileBottomNav';
 
 // Distinct WooCommerce Pages
@@ -32,6 +33,13 @@ export default function App() {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
   const [isQuoteOpen, setIsQuoteOpen] = useState<boolean>(false);
+  const [isLegalOpen, setIsLegalOpen] = useState<boolean>(false);
+  const [legalTab, setLegalTab] = useState<LegalTab>('terms');
+
+  const handleOpenLegal = (tab: LegalTab) => {
+    setLegalTab(tab);
+    setIsLegalOpen(true);
+  };
 
   // Sync with URL hash for browser history / back-forward support
   useEffect(() => {
@@ -171,11 +179,12 @@ export default function App() {
         )}
       </main>
 
-      {/* WooCommerce Global Footer */}
+      {/* Global Footer with Pages and Legal sections */}
       <Footer
         onNavigate={(p) => navigateTo(p)}
         onOpenQuote={() => setIsQuoteOpen(true)}
         onScrollToTop={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onOpenLegal={handleOpenLegal}
       />
 
       {/* Mobile Sticky Bottom Navigation */}
@@ -190,6 +199,7 @@ export default function App() {
         onOpenCheckout={() => setIsCheckoutOpen(true)}
         onOpenQuote={() => setIsQuoteOpen(true)}
         onOpenCompliance={() => navigateTo('compliance')}
+        onOpenLegal={handleOpenLegal}
         onSelectProduct={navigateToProduct}
       />
 
@@ -199,12 +209,24 @@ export default function App() {
         onClose={() => setInspectedProduct(null)}
       />
 
-      {/* 1-Click Express Checkout Modal */}
+      {/* WooCommerce Checkout Modal */}
       <CheckoutModal
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
         onOpenCompliance={() => {
           setIsCheckoutOpen(false);
+          navigateTo('compliance');
+        }}
+        onOpenLegal={handleOpenLegal}
+      />
+
+      {/* Legal & Compliance Modal */}
+      <LegalModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+        initialTab={legalTab}
+        onOpenCompliance={() => {
+          setIsLegalOpen(false);
           navigateTo('compliance');
         }}
       />
