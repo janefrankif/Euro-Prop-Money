@@ -1,6 +1,7 @@
 import React from 'react';
 import { Film, ShieldCheck, Truck, Award, Users, CheckCircle, ArrowRight, Video, FileText } from 'lucide-react';
 import { HERO_IMAGE } from '../data/products';
+import { Link } from '../router';
 
 interface AboutPageProps {
   onNavigateHome: () => void;
@@ -20,12 +21,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* WooCommerce Breadcrumbs */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-slate-500 mb-6">
-          <button
-            onClick={onNavigateHome}
+          <Link
+            to="/"
             className="hover:text-amber-600 transition-colors cursor-pointer"
           >
             Home
-          </button>
+          </Link>
           <span>/</span>
           <span className="text-slate-900 font-semibold">About Us</span>
         </nav>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Send, Check, Clock, ShieldCheck, MessageCircle, Calendar, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { Link } from '../router';
 
 interface ContactPageProps {
   onNavigateHome: () => void;
@@ -50,12 +51,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigateHome, onOpen
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6">
-          <button
-            onClick={onNavigateHome}
+          <Link
+            to="/"
             className="hover:text-amber-600 transition-colors cursor-pointer"
           >
             Home
-          </button>
+          </Link>
           <span>/</span>
           <span className="text-slate-800 font-semibold">Contact & Support</span>
         </nav>

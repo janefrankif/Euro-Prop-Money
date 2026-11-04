@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShieldCheck, ArrowUp, Scale, FileText, Lock, RefreshCw, Truck } from 'lucide-react';
 import { SiteLogo } from './SiteLogo';
+import { Link } from '../router';
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -21,12 +22,13 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-10 border-b border-slate-200">
           {/* Brand Col */}
           <div className="lg:col-span-2 space-y-3">
-            <button
-              onClick={() => onNavigate('home')}
-              className="text-left cursor-pointer"
+            <Link
+              to="/"
+              className="text-left cursor-pointer inline-block"
+              aria-label="Euro Prop Money Home"
             >
               <SiteLogo size="md" variant="full" />
-            </button>
+            </Link>
             <p className="text-xs text-slate-600 leading-relaxed pt-1 max-w-sm">
               Specialist European supplier of realistic, camera-calibrated Euro prop currency bundles, flight cases, and stunt money for television, motion pictures, music videos, and AI virtual studio sets.
             </p>
@@ -45,47 +47,48 @@ export const Footer: React.FC<FooterProps> = ({
             </span>
             <ul className="space-y-1.5 text-slate-600">
               <li>
-                <button
-                  onClick={() => onNavigate('home')}
-                  className="hover:text-slate-900 transition-colors cursor-pointer text-left"
+                <Link
+                  to="/"
+                  className="hover:text-slate-900 transition-colors cursor-pointer text-left block"
                 >
                   Home
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('shop')}
-                  className="hover:text-amber-700 transition-colors cursor-pointer text-left font-semibold text-amber-700"
+                <Link
+                  to="/shop"
+                  className="hover:text-amber-700 transition-colors cursor-pointer text-left font-semibold text-amber-700 block"
                 >
                   Shop
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('about')}
-                  className="hover:text-slate-900 transition-colors cursor-pointer text-left"
+                <Link
+                  to="/about"
+                  className="hover:text-slate-900 transition-colors cursor-pointer text-left block"
                 >
                   About Us
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('contact')}
-                  className="hover:text-slate-900 transition-colors cursor-pointer text-left"
+                <Link
+                  to="/contact"
+                  className="hover:text-slate-900 transition-colors cursor-pointer text-left block"
                 >
                   Contact
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('blog')}
-                  className="hover:text-slate-900 transition-colors cursor-pointer text-left"
+                <Link
+                  to="/blog"
+                  className="hover:text-slate-900 transition-colors cursor-pointer text-left block"
                 >
                   Production Blog
-                </button>
+                </Link>
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={onOpenQuote}
                   className="hover:text-slate-900 transition-colors cursor-pointer text-left"
                 >
@@ -104,6 +107,7 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-1.5 text-slate-600">
               <li>
                 <button
+                  type="button"
                   onClick={() => onOpenLegal ? onOpenLegal('terms') : onNavigate('compliance')}
                   className="hover:text-amber-700 transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
@@ -113,6 +117,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={() => onOpenLegal ? onOpenLegal('privacy') : onNavigate('compliance')}
                   className="hover:text-amber-700 transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
@@ -122,6 +127,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={() => onOpenLegal ? onOpenLegal('refund') : onNavigate('compliance')}
                   className="hover:text-amber-700 transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
@@ -131,6 +137,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={() => onOpenLegal ? onOpenLegal('shipping') : onNavigate('compliance')}
                   className="hover:text-amber-700 transition-colors cursor-pointer text-left flex items-center gap-1.5"
                 >
@@ -139,13 +146,13 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('compliance')}
+                <Link
+                  to="/compliance"
                   className="hover:text-emerald-800 transition-colors cursor-pointer text-left flex items-center gap-1.5 text-emerald-700 font-medium"
                 >
                   <ShieldCheck className="w-3 h-3 text-emerald-600" />
                   <span>ECB Safe Harbor Compliance</span>
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -170,6 +177,7 @@ export const Footer: React.FC<FooterProps> = ({
 
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             <button
+              type="button"
               onClick={() => onOpenLegal ? onOpenLegal('terms') : onNavigate('compliance')}
               className="hover:text-slate-900 transition-colors cursor-pointer"
             >
@@ -177,6 +185,7 @@ export const Footer: React.FC<FooterProps> = ({
             </button>
             <span aria-hidden="true">·</span>
             <button
+              type="button"
               onClick={() => onOpenLegal ? onOpenLegal('privacy') : onNavigate('compliance')}
               className="hover:text-slate-900 transition-colors cursor-pointer"
             >
@@ -184,20 +193,22 @@ export const Footer: React.FC<FooterProps> = ({
             </button>
             <span aria-hidden="true">·</span>
             <button
+              type="button"
               onClick={() => onOpenLegal ? onOpenLegal('refund') : onNavigate('compliance')}
               className="hover:text-slate-900 transition-colors cursor-pointer"
             >
               Refunds
             </button>
             <span aria-hidden="true">·</span>
-            <button
-              onClick={() => onNavigate('compliance')}
+            <Link
+              to="/compliance"
               className="hover:text-slate-900 transition-colors cursor-pointer"
             >
               ECB Legal Compliance
-            </button>
+            </Link>
             <span aria-hidden="true">·</span>
             <button
+              type="button"
               onClick={onScrollToTop}
               className="flex items-center gap-1 hover:text-slate-900 transition-colors cursor-pointer ml-1"
             >

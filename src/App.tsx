@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { RouterProvider, useRouter } from './router';
 import { AnnouncementBar } from './components/AnnouncementBar';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -18,17 +19,15 @@ import { ContactPage } from './pages/ContactPage';
 import { BlogPage } from './pages/BlogPage';
 import { CompliancePage } from './pages/CompliancePage';
 import { SingleProductPage } from './pages/SingleProductPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 import { Product } from './types';
 import { PRODUCTS } from './data/products';
 import { BlogPost } from './data/blog';
 
-type PageType = 'home' | 'shop' | 'about' | 'contact' | 'blog' | 'compliance' | 'product';
+function AppContent() {
+  const { route, navigate, navigateToProduct, navigateToCategory } = useRouter();
 
-export default function App() {
-  const [currentPage, setCurrentPage] = useState<PageType>('home');
-  const [shopCategory, setShopCategory] = useState<string>('all');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(PRODUCTS[0]);
   const [inspectedProduct, setInspectedProduct] = useState<Product | null>(null);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
@@ -41,53 +40,23 @@ export default function App() {
     setIsLegalOpen(true);
   };
 
-  // Sync with URL hash for browser history / back-forward support
-  useEffect(() => {
-    const handleHashChange = () => {
-      const rawHash = window.location.hash.replace('#/', '').replace('#', '');
-      
-      // Single product page format: #/product/:slug
-      if (rawHash.startsWith('product/')) {
-        const slug = rawHash.replace('product/', '').trim();
-        const found = PRODUCTS.find((p) => p.slug === slug || p.id === slug);
-        if (found) {
-          setSelectedProduct(found);
-          setCurrentPage('product');
-          return;
-        } else {
-          setCurrentPage('shop');
-          return;
-        }
-      }
-
-      const cleanHash = rawHash.toLowerCase();
-      if (['home', 'shop', 'about', 'contact', 'blog', 'compliance', 'product'].includes(cleanHash)) {
-        setCurrentPage(cleanHash as PageType);
-      } else if (!cleanHash) {
-        setCurrentPage('home');
-      }
-    };
-
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  const navigateTo = (page: string, category?: string) => {
-    const target = page.toLowerCase() as PageType;
-    if (category) {
-      setShopCategory(category);
+  const handleNavigate = (page: string, category?: string) => {
+    const p = page.toLowerCase();
+    if (p === 'home') {
+      navigate('/');
+    } else if (p === 'shop') {
+      navigateToCategory(category || 'all');
+    } else if (p === 'about') {
+      navigate('/about');
+    } else if (p === 'contact') {
+      navigate('/contact');
+    } else if (p === 'blog') {
+      navigate('/blog');
+    } else if (p === 'compliance') {
+      navigate('/compliance');
+    } else {
+      navigate(`/${p}`);
     }
-    setCurrentPage(target);
-    window.location.hash = `#/${target}`;
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  };
-
-  const navigateToProduct = (product: Product) => {
-    setSelectedProduct(product);
-    setCurrentPage('product');
-    window.location.hash = `#/product/${product.slug}`;
-    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const handleInspect = (product: Product) => {
@@ -98,90 +67,95 @@ export default function App() {
     setSelectedPost(post);
   };
 
+  // Determine current active page for header navigation highlight
+  const activeHeaderPage = route.view === '404' ? '' : route.view;
+
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-amber-400 selection:text-slate-900">
       {/* Top Automated Announcement Marquee */}
       <AnnouncementBar />
 
-      {/* WooCommerce Top Header Navigation with Active Page State */}
+      {/* WooCommerce Top Header Navigation with Active Page State & Direct Route Sync */}
       <Header
-        currentPage={currentPage}
-        onNavigate={(p) => navigateTo(p)}
+        currentPage={activeHeaderPage}
+        onNavigate={handleNavigate}
         onOpenCheckout={() => setIsCheckoutOpen(true)}
       />
 
       {/* Distinct WooCommerce Page Router Views */}
       <main className="flex-1 w-full">
-        {currentPage === 'home' && (
+        {route.view === 'home' && (
           <HomePage
             onInspectProduct={handleInspect}
             onSelectProduct={navigateToProduct}
-            onNavigateShop={(cat) => navigateTo('shop', cat)}
-            onNavigateAbout={() => navigateTo('about')}
-            onNavigateContact={() => navigateTo('contact')}
-            onNavigateBlog={() => navigateTo('blog')}
-            onOpenCompliance={() => navigateTo('compliance')}
+            onNavigateShop={(cat) => navigateToCategory(cat || 'all')}
+            onNavigateAbout={() => navigate('/about')}
+            onNavigateContact={() => navigate('/contact')}
+            onNavigateBlog={() => navigate('/blog')}
+            onOpenCompliance={() => navigate('/compliance')}
             onOpenQuote={() => setIsQuoteOpen(true)}
             onReadPost={handleReadPost}
           />
         )}
 
-        {currentPage === 'shop' && (
+        {route.view === 'shop' && (
           <ShopPage
             onInspectProduct={handleInspect}
             onSelectProduct={navigateToProduct}
-            initialCategory={shopCategory}
-            onNavigateHome={() => navigateTo('home')}
+            initialCategory={route.category || 'all'}
+            onNavigateHome={() => navigate('/')}
           />
         )}
 
-        {currentPage === 'product' && selectedProduct && (
+        {route.view === 'product' && (
           <SingleProductPage
-            product={selectedProduct}
-            onNavigateShop={(cat) => navigateTo('shop', cat)}
-            onNavigateHome={() => navigateTo('home')}
+            product={route.product || PRODUCTS[0]}
+            onNavigateShop={(cat) => navigateToCategory(cat || 'all')}
+            onNavigateHome={() => navigate('/')}
             onSelectProduct={navigateToProduct}
-            onOpenCompliance={() => navigateTo('compliance')}
+            onOpenCompliance={() => navigate('/compliance')}
             onOpenQuote={() => setIsQuoteOpen(true)}
             onOpenCheckout={() => setIsCheckoutOpen(true)}
           />
         )}
 
-        {currentPage === 'about' && (
+        {route.view === 'about' && (
           <AboutPage
-            onNavigateHome={() => navigateTo('home')}
-            onNavigateShop={() => navigateTo('shop')}
-            onOpenCompliance={() => navigateTo('compliance')}
+            onNavigateHome={() => navigate('/')}
+            onNavigateShop={() => navigate('/shop')}
+            onOpenCompliance={() => navigate('/compliance')}
             onOpenQuote={() => setIsQuoteOpen(true)}
           />
         )}
 
-        {currentPage === 'contact' && (
+        {route.view === 'contact' && (
           <ContactPage
-            onNavigateHome={() => navigateTo('home')}
-            onOpenCompliance={() => navigateTo('compliance')}
+            onNavigateHome={() => navigate('/')}
+            onOpenCompliance={() => navigate('/compliance')}
           />
         )}
 
-        {currentPage === 'blog' && (
+        {route.view === 'blog' && (
           <BlogPage
-            onNavigateHome={() => navigateTo('home')}
+            onNavigateHome={() => navigate('/')}
             onReadPost={handleReadPost}
           />
         )}
 
-        {currentPage === 'compliance' && (
+        {route.view === 'compliance' && (
           <CompliancePage
-            onNavigateHome={() => navigateTo('home')}
-            onNavigateShop={() => navigateTo('shop')}
+            onNavigateHome={() => navigate('/')}
+            onNavigateShop={() => navigate('/shop')}
             onOpenQuote={() => setIsQuoteOpen(true)}
           />
         )}
+
+        {route.view === '404' && <NotFoundPage />}
       </main>
 
       {/* Global Footer with Pages and Legal sections */}
       <Footer
-        onNavigate={(p) => navigateTo(p)}
+        onNavigate={handleNavigate}
         onOpenQuote={() => setIsQuoteOpen(true)}
         onScrollToTop={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         onOpenLegal={handleOpenLegal}
@@ -189,8 +163,8 @@ export default function App() {
 
       {/* Mobile Sticky Bottom Navigation */}
       <MobileBottomNav
-        currentPage={currentPage}
-        onNavigate={(p) => navigateTo(p)}
+        currentPage={activeHeaderPage}
+        onNavigate={handleNavigate}
         onOpenCheckout={() => setIsCheckoutOpen(true)}
       />
 
@@ -198,7 +172,7 @@ export default function App() {
       <CartDrawer
         onOpenCheckout={() => setIsCheckoutOpen(true)}
         onOpenQuote={() => setIsQuoteOpen(true)}
-        onOpenCompliance={() => navigateTo('compliance')}
+        onOpenCompliance={() => navigate('/compliance')}
         onOpenLegal={handleOpenLegal}
         onSelectProduct={navigateToProduct}
       />
@@ -215,7 +189,7 @@ export default function App() {
         onClose={() => setIsCheckoutOpen(false)}
         onOpenCompliance={() => {
           setIsCheckoutOpen(false);
-          navigateTo('compliance');
+          navigate('/compliance');
         }}
         onOpenLegal={handleOpenLegal}
       />
@@ -227,7 +201,7 @@ export default function App() {
         initialTab={legalTab}
         onOpenCompliance={() => {
           setIsLegalOpen(false);
-          navigateTo('compliance');
+          navigate('/compliance');
         }}
       />
 
@@ -239,9 +213,22 @@ export default function App() {
 
       {/* Full-Length Blog Article Reader Modal */}
       <BlogModal
-        post={selectedPost}
-        onClose={() => setSelectedPost(null)}
+        post={selectedPost || route.blogPost || null}
+        onClose={() => {
+          setSelectedPost(null);
+          if (route.blogPost) {
+            navigate('/blog', { replace: true, scroll: false });
+          }
+        }}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <RouterProvider>
+      <AppContent />
+    </RouterProvider>
   );
 }

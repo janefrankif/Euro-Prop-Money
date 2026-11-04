@@ -8,8 +8,9 @@ import { StudioTrustSection } from '../components/StudioTrustSection';
 import { SEORichSection } from '../components/SEORichSection';
 import { PRODUCTS } from '../data/products';
 import { Product } from '../types';
-import { ArrowRight, Sparkles, BookOpen, Flame, Tag } from 'lucide-react';
 import { BLOG_POSTS, BlogPost } from '../data/blog';
+import { ArrowRight, BookOpen } from 'lucide-react';
+import { Link } from '../router';
 
 interface HomePageProps {
   onInspectProduct: (product: Product) => void;
@@ -65,12 +66,6 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-700 font-semibold mb-2">
-                <Flame className="w-4 h-4 text-amber-600" />
-                <span>Highest Demand Configurations</span>
-                <span aria-hidden="true" className="text-slate-300">·</span>
-                <span className="bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-bold">Top 4 On-Set Sellers</span>
-              </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
                 Most Demanded Prop Money
               </h2>
@@ -80,13 +75,13 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             {/* Direct Link to Full Shop Catalog */}
-            <button
-              onClick={() => onNavigateShop('all')}
+            <Link
+              to="/shop"
               className="flex items-center gap-2 px-5 py-2.5 bg-slate-100 border border-slate-300 hover:border-amber-400 text-slate-800 hover:text-slate-950 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap shadow-xs group"
             >
               <span>View All Products in Shop</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-amber-600" />
-            </button>
+            </Link>
           </div>
 
           {/* 4 Featured Products Grid */}
@@ -117,12 +112,12 @@ export const HomePage: React.FC<HomePageProps> = ({
               <span className="font-bold text-slate-900 block sm:inline mr-2">Need individual denominations (€5, €10, €20, €200) or customized director packages?</span>
               <span className="text-slate-500">Explore our complete catalog with single banded stacks, distressed crime notes, and tactical bags.</span>
             </div>
-            <button
-              onClick={() => onNavigateShop('all')}
+            <Link
+              to="/shop"
               className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl transition-colors cursor-pointer whitespace-nowrap shadow-xs"
             >
               Explore Full Shop
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -138,8 +133,6 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-700 font-semibold mb-2">
                 <BookOpen className="w-4 h-4 text-amber-600" />
                 <span>Industry Production Guides</span>
-                <span aria-hidden="true" className="text-slate-300">·</span>
-                <span>High Search Volume Insights</span>
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
                 Prop Master & Film Production Blog
@@ -148,13 +141,13 @@ export const HomePage: React.FC<HomePageProps> = ({
                 Authoritative compliance articles, camera sensor tests, and cross-border customs advice for filmmaking crews.
               </p>
             </div>
-            <button
-              onClick={onNavigateBlog}
+            <Link
+              to="/blog"
               className="flex items-center gap-1.5 text-xs font-bold text-amber-700 hover:text-amber-800 uppercase tracking-wider transition-colors cursor-pointer"
             >
               <span>View All 4 Articles</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            </Link>
           </div>
 
           {/* 4 Blog Posts Grid */}

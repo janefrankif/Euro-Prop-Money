@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ShoppingBag, Eye, Check, ShieldCheck } from 'lucide-react';
 import { Product } from '../types';
 import { useCartStore } from '../store/useCartStore';
+import { Link, useRouter } from '../router';
 
 interface ProductCardProps {
   product: Product;
@@ -14,39 +15,42 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onInspect,
   onSelectProduct 
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity] = useState(1);
   const [addedAnimation, setAddedAnimation] = useState(false);
+  const { navigateToProduct } = useRouter();
 
   const { addItem } = useCartStore();
 
-  const handleOpenProduct = () => {
-    if (onSelectProduct) {
-      onSelectProduct(product);
-    } else {
-      onInspect(product);
+  const productUrl = `/products/${product.slug || product.id}`;
+
+  const handleOpenProduct = (e: React.MouseEvent) => {
+    // If standard left-click without modifier keys, use client routing
+    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && e.button === 0) {
+      e.preventDefault();
+      if (onSelectProduct) {
+        onSelectProduct(product);
+      } else {
+        navigateToProduct(product);
+      }
     }
   };
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     addItem(product, quantity);
     setAddedAnimation(true);
     setTimeout(() => setAddedAnimation(false), 1500);
   };
 
   return (
-    <article
-      onClick={handleOpenProduct}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="group relative flex flex-col justify-between rounded-xl bg-white border border-slate-200 hover:border-amber-400 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden hover:-translate-y-0.5 cursor-pointer"
-    >
-      {/* Product Image Slot (65%–70% visual weight) */}
-      <div 
+    <article className="group relative flex flex-col justify-between rounded-xl bg-white border border-slate-200 hover:border-amber-400 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden hover:-translate-y-0.5">
+      {/* Product Image Slot with shareable link */}
+      <Link 
+        to={productUrl}
         onClick={handleOpenProduct}
-        className="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden cursor-pointer"
+        className="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden cursor-pointer block"
       >
         {!imageError ? (
           <img
@@ -70,9 +74,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Ambient subtle vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent pointer-events-none" />
 
-        {/* Studio Tag: Single subtle text tag, NOT a round pill */}
+        {/* Studio Tag */}
         {product.tag && (
-          <div className="absolute top-3 left-3">
+          <div className="absolute top-3 left-3 z-10 pointer-events-none">
             <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-amber-800 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded border border-slate-200 shadow-xs">
               {product.tag}
             </span>
@@ -80,7 +84,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         )}
 
         {/* Face Value Visual Tag */}
-        <div className="absolute bottom-3 left-3">
+        <div className="absolute bottom-3 left-3 z-10 pointer-events-none">
           <span className="text-xs font-mono font-bold text-slate-900 bg-white/90 backdrop-blur-md px-2 py-1 rounded border border-slate-200 shadow-xs">
             {product.faceValue}
           </span>
@@ -88,16 +92,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Quick Camera Inspection Overlay Button */}
         <button
+          type="button"
           onClick={(e) => {
             e.stopPropagation();
+            e.preventDefault();
             onInspect(product);
           }}
           aria-label={`Inspect ${product.name} in 8K camera viewer`}
-          className="absolute top-3 right-3 p-2 rounded-lg bg-white/90 backdrop-blur-md border border-slate-200 text-slate-700 hover:text-slate-950 hover:bg-white transition-colors opacity-90 sm:opacity-0 group-hover:opacity-100 cursor-pointer shadow-xs"
+          className="absolute top-3 right-3 p-2 rounded-lg bg-white/90 backdrop-blur-md border border-slate-200 text-slate-700 hover:text-slate-950 hover:bg-white transition-colors opacity-90 sm:opacity-0 group-hover:opacity-100 cursor-pointer shadow-xs z-10"
         >
           <Eye className="w-4 h-4" />
         </button>
-      </div>
+      </Link>
 
       {/* Card Content & Metadata */}
       <div className="flex flex-col flex-1 p-5">
@@ -110,9 +116,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <span>{product.printType === '2-sided' ? 'Full 2-Sided' : '1-Sided Stunt'}</span>
         </div>
 
-        {/* Product Title */}
+        {/* Product Title (Interactive Link) */}
         <h3 className="text-base font-semibold text-slate-900 group-hover:text-amber-600 transition-colors line-clamp-1 mb-2">
-          {product.name}
+          <Link to={productUrl} onClick={handleOpenProduct} className="hover:underline">
+            {product.name}
+          </Link>
         </h3>
 
         {/* Product Description */}

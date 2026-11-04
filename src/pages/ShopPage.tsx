@@ -3,6 +3,7 @@ import { Search, SlidersHorizontal, X, ArrowUpDown, ShieldCheck, Sparkles, Shopp
 import { Product, CoreCategory } from '../types';
 import { PRODUCTS } from '../data/products';
 import { ProductCard } from '../components/ProductCard';
+import { Link } from '../router';
 
 interface ShopPageProps {
   onInspectProduct: (product: Product) => void;
@@ -142,12 +143,12 @@ export const ShopPage: React.FC<ShopPageProps> = ({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* WooCommerce Breadcrumbs */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-slate-500 mb-6">
-          <button
-            onClick={onNavigateHome}
+          <Link
+            to="/"
             className="hover:text-amber-600 transition-colors cursor-pointer"
           >
             Home
-          </button>
+          </Link>
           <span>/</span>
           <span className="text-slate-900 font-semibold">Shop Catalog</span>
           {selectedCoreCategory !== 'all' && (

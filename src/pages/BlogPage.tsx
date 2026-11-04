@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BookOpen, Clock, Calendar, ArrowRight, Tag, ShieldCheck } from 'lucide-react';
 import { BLOG_POSTS, BlogPost } from '../data/blog';
+import { Link } from '../router';
 
 interface BlogPageProps {
   onNavigateHome: () => void;
@@ -21,14 +22,14 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigateHome, onReadPost }
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6">
-          <button
-            onClick={onNavigateHome}
+          <Link
+            to="/"
             className="hover:text-amber-600 transition-colors cursor-pointer"
           >
             Home
-          </button>
+          </Link>
           <span>/</span>
-          <span className="text-slate-800 font-semibold">Blog & Guides</span>
+          <span className="text-slate-800 font-semibold">Blog &amp; Guides</span>
         </nav>
 
         {/* Title */}

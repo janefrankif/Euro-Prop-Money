@@ -70,8 +70,6 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-700 font-bold mb-2">
             <HelpCircle className="w-4 h-4 text-amber-600" />
             <span>Art Department Knowledge Base</span>
-            <span aria-hidden="true" className="text-slate-300">·</span>
-            <span>5 Most Searched Questions</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
             Frequently Asked Questions

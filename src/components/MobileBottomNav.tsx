@@ -1,6 +1,7 @@
 import React from 'react';
-import { Home, Layers, Info, ShoppingBag, Zap } from 'lucide-react';
+import { Home, Layers, Info, ShoppingBag } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
+import { Link } from '../router';
 
 interface MobileBottomNavProps {
   currentPage: string;
@@ -10,8 +11,6 @@ interface MobileBottomNavProps {
 
 export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   currentPage,
-  onNavigate,
-  onOpenCheckout,
 }) => {
   const { getItemCount, setIsOpen } = useCartStore();
   const itemCount = getItemCount();
@@ -20,8 +19,8 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-200 pb-safe shadow-lg">
       <nav className="flex items-center justify-around h-14 max-w-lg mx-auto px-2">
         {/* Home */}
-        <button
-          onClick={() => onNavigate('home')}
+        <Link
+          to="/"
           className={`flex flex-col items-center justify-center flex-1 h-full transition-colors cursor-pointer active:scale-95 ${
             currentPage === 'home' ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
@@ -29,11 +28,11 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         >
           <Home className="w-4 h-4 mb-0.5" />
           <span className="text-[10px] font-semibold tracking-wider uppercase">HOME</span>
-        </button>
+        </Link>
 
         {/* Shop */}
-        <button
-          onClick={() => onNavigate('shop')}
+        <Link
+          to="/shop"
           className={`flex flex-col items-center justify-center flex-1 h-full transition-colors cursor-pointer active:scale-95 ${
             currentPage === 'shop' ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
@@ -41,11 +40,11 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         >
           <Layers className="w-4 h-4 mb-0.5" />
           <span className="text-[10px] font-semibold tracking-wider uppercase">SHOP</span>
-        </button>
+        </Link>
 
         {/* About */}
-        <button
-          onClick={() => onNavigate('about')}
+        <Link
+          to="/about"
           className={`flex flex-col items-center justify-center flex-1 h-full transition-colors cursor-pointer active:scale-95 ${
             currentPage === 'about' ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
@@ -53,33 +52,24 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         >
           <Info className="w-4 h-4 mb-0.5" />
           <span className="text-[10px] font-semibold tracking-wider uppercase">ABOUT</span>
-        </button>
+        </Link>
 
-        {/* Cart */}
+        {/* Cart Trigger */}
         <button
+          type="button"
           onClick={() => setIsOpen(true)}
-          className="relative flex flex-col items-center justify-center flex-1 h-full text-slate-500 hover:text-slate-900 transition-colors cursor-pointer active:scale-95"
-          aria-label={`Cart with ${itemCount} items`}
+          className="flex flex-col items-center justify-center flex-1 h-full text-slate-500 hover:text-slate-900 transition-colors cursor-pointer relative active:scale-95"
+          aria-label="Shopping Cart"
         >
           <div className="relative">
-            <ShoppingBag className="w-4 h-4 mb-0.5 text-amber-600" />
+            <ShoppingBag className="w-4 h-4 mb-0.5" />
             {itemCount > 0 && (
-              <span className="absolute -top-1.5 -right-2 min-w-4 h-4 px-0.5 text-[9px] font-mono font-bold bg-amber-400 text-slate-950 rounded-full flex items-center justify-center shadow-xs">
+              <span className="absolute -top-1.5 -right-2 bg-amber-400 text-slate-950 text-[9px] font-mono font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
                 {itemCount}
               </span>
             )}
           </div>
           <span className="text-[10px] font-semibold tracking-wider uppercase">CART</span>
-        </button>
-
-        {/* Quick Checkout */}
-        <button
-          onClick={onOpenCheckout}
-          className="flex flex-col items-center justify-center flex-1 h-full text-amber-600 hover:text-amber-700 transition-colors cursor-pointer active:scale-95"
-          aria-label="Quick Checkout"
-        >
-          <Zap className="w-4 h-4 mb-0.5" />
-          <span className="text-[10px] font-bold tracking-wider uppercase">CHECKOUT</span>
         </button>
       </nav>
     </div>

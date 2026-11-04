@@ -17,12 +17,13 @@ import {
   ChevronRight,
   HelpCircle,
   Clock,
-  Layers
+  Layers,
 } from 'lucide-react';
 import { Product } from '../types';
 import { PRODUCTS } from '../data/products';
 import { useCartStore } from '../store/useCartStore';
 import { ProductCard } from '../components/ProductCard';
+import { Link } from '../router';
 
 interface SingleProductPageProps {
   product: Product;
@@ -100,37 +101,37 @@ export const SingleProductPage: React.FC<SingleProductPageProps> = ({
       <div className="w-full border-b border-slate-200 bg-slate-50/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3 text-xs">
           <nav aria-label="Breadcrumb" className="flex items-center space-x-2 font-mono text-slate-500">
-            <button
-              onClick={onNavigateHome}
+            <Link
+              to="/"
               className="hover:text-amber-600 transition-colors uppercase font-semibold cursor-pointer"
             >
               HOME
-            </button>
+            </Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <button
-              onClick={() => onNavigateShop('all')}
+            <Link
+              to="/shop"
               className="hover:text-amber-600 transition-colors uppercase font-semibold cursor-pointer"
             >
               SHOP
-            </button>
+            </Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <button
-              onClick={() => onNavigateShop(product.coreCategory)}
+            <Link
+              to={`/shop?category=${product.coreCategory}`}
               className="hover:text-amber-600 transition-colors uppercase font-semibold cursor-pointer hidden sm:inline-block"
             >
               {getCoreCategoryLabel(product.coreCategory)}
-            </button>
+            </Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400 hidden sm:inline-block" />
             <span className="text-slate-900 font-bold truncate max-w-[200px] sm:max-w-xs">{product.name}</span>
           </nav>
 
-          <button
-            onClick={() => onNavigateShop('all')}
+          <Link
+            to="/shop"
             className="flex items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors cursor-pointer group"
           >
             <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
             <span>Back to Catalog</span>
-          </button>
+          </Link>
         </div>
       </div>
 

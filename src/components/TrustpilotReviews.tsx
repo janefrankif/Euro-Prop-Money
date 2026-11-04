@@ -33,14 +33,12 @@ export const TrustpilotReviews: React.FC = () => {
   return (
     <section className="w-full py-16 lg:py-24 border-b border-slate-200 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header with Trustpilot Badge & 10 Real-Time Reviews Count */}
+        {/* Header with Trustpilot Badge & Reviews Summary */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-emerald-700 font-semibold mb-2">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
               <span>Verified Studio Testimonials</span>
-              <span aria-hidden="true" className="text-slate-300">·</span>
-              <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">10 Real-Time Reviews</span>
               <span aria-hidden="true" className="text-slate-300">·</span>
               <span>450+ EU Productions</span>
             </div>

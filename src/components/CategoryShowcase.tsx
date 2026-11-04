@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layers, Briefcase, Sparkles, ArrowRight } from 'lucide-react';
+import { Link } from '../router';
 
 interface CategoryShowcaseProps {
   onSelectCategory: (category: string) => void;
@@ -56,11 +57,13 @@ export const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCate
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {categories.map((cat) => {
             const Icon = cat.icon;
+            const categoryUrl = `/shop?category=${cat.actionCategory}`;
             return (
-              <div
+              <Link
                 key={cat.id}
+                to={categoryUrl}
                 onClick={() => onSelectCategory(cat.actionCategory)}
-                className="group relative rounded-2xl bg-white border border-slate-200 p-7 flex flex-col justify-between hover:border-amber-400 transition-all duration-300 cursor-pointer hover:-translate-y-1 shadow-sm hover:shadow-md"
+                className="group relative rounded-2xl bg-white border border-slate-200 p-7 flex flex-col justify-between hover:border-amber-400 transition-all duration-300 cursor-pointer hover:-translate-y-1 shadow-sm hover:shadow-md block"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -87,7 +90,7 @@ export const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCate
                   <span>Browse {cat.title}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-amber-600" />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
