@@ -38,14 +38,14 @@ export const AnnouncementBar: React.FC = () => {
       aria-label="Promotional announcements"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="relative z-50 w-full bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border-b border-zinc-800/90 text-zinc-300 text-[11px] sm:text-xs font-medium py-1.5 px-3 select-none"
+      className="relative z-50 w-full bg-slate-900 border-b border-slate-800 text-slate-200 text-[11px] sm:text-xs font-medium py-1.5 px-3 select-none"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         {/* Left Arrow (Desktop) */}
         <button
           onClick={prevAnnouncement}
           aria-label="Previous announcement"
-          className="hidden sm:flex p-1 text-zinc-500 hover:text-white transition-colors cursor-pointer"
+          className="hidden sm:flex p-1 text-slate-400 hover:text-white transition-colors cursor-pointer"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
         </button>
@@ -53,14 +53,14 @@ export const AnnouncementBar: React.FC = () => {
         {/* Center Active Item with Transition */}
         <div className="flex-1 flex items-center justify-center gap-2.5 overflow-hidden">
           <div className="flex items-center gap-2 transition-all duration-300 ease-out transform">
-            <span className="p-1 rounded bg-amber-400/10 text-amber-400">
+            <span className="p-1 rounded bg-amber-400/20 text-amber-400">
               <IconComponent className="w-3.5 h-3.5" />
             </span>
             <span className="font-semibold text-white tracking-wide">
               {current.text}
             </span>
-            <span className="hidden md:inline-block text-zinc-600">·</span>
-            <span className="hidden md:inline-block text-zinc-400 font-mono text-[10px] uppercase">
+            <span className="hidden md:inline-block text-slate-500">·</span>
+            <span className="hidden md:inline-block text-amber-400/90 font-mono text-[10px] uppercase font-semibold">
               {current.highlight}
             </span>
           </div>
@@ -76,7 +76,7 @@ export const AnnouncementBar: React.FC = () => {
                 onClick={() => setCurrentIndex(idx)}
                 aria-label={`Go to announcement ${idx + 1}`}
                 className={`w-1.5 h-1.5 rounded-full transition-all cursor-pointer ${
-                  currentIndex === idx ? 'bg-amber-400 w-3' : 'bg-zinc-700 hover:bg-zinc-500'
+                  currentIndex === idx ? 'bg-amber-400 w-3' : 'bg-slate-700 hover:bg-slate-500'
                 }`}
               />
             ))}
@@ -85,7 +85,7 @@ export const AnnouncementBar: React.FC = () => {
           <button
             onClick={nextAnnouncement}
             aria-label="Next announcement"
-            className="p-1 text-zinc-500 hover:text-white transition-colors cursor-pointer"
+            className="p-1 text-slate-400 hover:text-white transition-colors cursor-pointer"
           >
             <ChevronRight className="w-3.5 h-3.5" />
           </button>

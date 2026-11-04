@@ -16,15 +16,18 @@ import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { BlogPage } from './pages/BlogPage';
 import { CompliancePage } from './pages/CompliancePage';
+import { SingleProductPage } from './pages/SingleProductPage';
 
 import { Product } from './types';
+import { PRODUCTS } from './data/products';
 import { BlogPost } from './data/blog';
 
-type PageType = 'home' | 'shop' | 'about' | 'contact' | 'blog' | 'compliance';
+type PageType = 'home' | 'shop' | 'about' | 'contact' | 'blog' | 'compliance' | 'product';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [shopCategory, setShopCategory] = useState<string>('all');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(PRODUCTS[0]);
   const [inspectedProduct, setInspectedProduct] = useState<Product | null>(null);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
@@ -33,10 +36,26 @@ export default function App() {
   // Sync with URL hash for browser history / back-forward support
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#/', '').replace('#', '').toLowerCase();
-      if (['home', 'shop', 'about', 'contact', 'blog', 'compliance'].includes(hash)) {
-        setCurrentPage(hash as PageType);
-      } else if (!hash) {
+      const rawHash = window.location.hash.replace('#/', '').replace('#', '');
+      
+      // Single product page format: #/product/:slug
+      if (rawHash.startsWith('product/')) {
+        const slug = rawHash.replace('product/', '').trim();
+        const found = PRODUCTS.find((p) => p.slug === slug || p.id === slug);
+        if (found) {
+          setSelectedProduct(found);
+          setCurrentPage('product');
+          return;
+        } else {
+          setCurrentPage('shop');
+          return;
+        }
+      }
+
+      const cleanHash = rawHash.toLowerCase();
+      if (['home', 'shop', 'about', 'contact', 'blog', 'compliance', 'product'].includes(cleanHash)) {
+        setCurrentPage(cleanHash as PageType);
+      } else if (!cleanHash) {
         setCurrentPage('home');
       }
     };
@@ -56,6 +75,13 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
+  const navigateToProduct = (product: Product) => {
+    setSelectedProduct(product);
+    setCurrentPage('product');
+    window.location.hash = `#/product/${product.slug}`;
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
   const handleInspect = (product: Product) => {
     setInspectedProduct(product);
   };
@@ -65,7 +91,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-amber-500 selection:text-zinc-950">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-amber-400 selection:text-slate-900">
       {/* Top Automated Announcement Marquee */}
       <AnnouncementBar />
 
@@ -81,6 +107,7 @@ export default function App() {
         {currentPage === 'home' && (
           <HomePage
             onInspectProduct={handleInspect}
+            onSelectProduct={navigateToProduct}
             onNavigateShop={(cat) => navigateTo('shop', cat)}
             onNavigateAbout={() => navigateTo('about')}
             onNavigateContact={() => navigateTo('contact')}
@@ -94,8 +121,21 @@ export default function App() {
         {currentPage === 'shop' && (
           <ShopPage
             onInspectProduct={handleInspect}
+            onSelectProduct={navigateToProduct}
             initialCategory={shopCategory}
             onNavigateHome={() => navigateTo('home')}
+          />
+        )}
+
+        {currentPage === 'product' && selectedProduct && (
+          <SingleProductPage
+            product={selectedProduct}
+            onNavigateShop={(cat) => navigateTo('shop', cat)}
+            onNavigateHome={() => navigateTo('home')}
+            onSelectProduct={navigateToProduct}
+            onOpenCompliance={() => navigateTo('compliance')}
+            onOpenQuote={() => setIsQuoteOpen(true)}
+            onOpenCheckout={() => setIsCheckoutOpen(true)}
           />
         )}
 
@@ -150,6 +190,7 @@ export default function App() {
         onOpenCheckout={() => setIsCheckoutOpen(true)}
         onOpenQuote={() => setIsQuoteOpen(true)}
         onOpenCompliance={() => navigateTo('compliance')}
+        onSelectProduct={navigateToProduct}
       />
 
       {/* 8K Studio Camera Tester Modal */}

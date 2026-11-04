@@ -2,7 +2,8 @@ export type Denomination = 5 | 10 | 20 | 50 | 100 | 200 | 500 | 'mixed';
 
 export type PrintType = '2-sided' | '1-sided';
 export type FinishType = 'crisp-vault' | 'weathered-stunt' | 'aged-crime';
-export type ProductCategory = 'stack' | 'bag' | 'case' | 'bundle';
+export type CoreCategory = 'single' | 'bundles' | 'special';
+export type ProductCategory = 'all' | 'stack' | 'bag' | 'case' | 'bundle' | 'single' | 'bundles' | 'special';
 
 export interface ProductCompliance {
   standard: string;
@@ -25,7 +26,8 @@ export interface Product {
   denomination: Denomination;
   faceValue: string;
   price: number;
-  category: ProductCategory;
+  coreCategory: CoreCategory;
+  category: 'stack' | 'bag' | 'case' | 'bundle' | 'single' | 'bundles' | 'special';
   printType: PrintType;
   finish: FinishType;
   billsPerUnit: number;
@@ -36,6 +38,8 @@ export interface Product {
   specifications: ProductSpecifications;
   inStock: boolean;
   shipsIn: string;
+  isDoubleSided?: boolean;
+  isAged?: boolean;
 }
 
 export interface CartItem {

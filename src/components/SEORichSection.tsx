@@ -11,18 +11,18 @@ export const SEORichSection: React.FC<SEORichSectionProps> = ({
   onOpenQuote,
 }) => {
   return (
-    <section className="w-full py-16 lg:py-24 border-b border-zinc-800 bg-zinc-950">
+    <section className="w-full py-16 lg:py-24 border-b border-slate-200 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Main Editorial Text Column */}
-          <div className="lg:col-span-8 space-y-8 text-zinc-300 text-xs sm:text-sm leading-relaxed">
+          <div className="lg:col-span-8 space-y-8 text-slate-600 text-xs sm:text-sm leading-relaxed">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-400 mb-2">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-700 font-semibold mb-2">
                 <span>Cinema Production Knowledge Base</span>
-                <span aria-hidden="true" className="text-zinc-600">·</span>
+                <span aria-hidden="true" className="text-slate-300">·</span>
                 <span>Camera Grade Standards</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-4">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-4">
                 Realistic Euro Prop Money for Film, Television & AI Studio Productions
               </h2>
               <p>
@@ -31,7 +31,7 @@ export const SEORichSection: React.FC<SEORichSectionProps> = ({
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-base sm:text-lg font-bold text-white">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900">
                 Camera-Grade Non-Reflective Matte Finish vs Cheap Glossy Props
               </h3>
               <p>
@@ -40,34 +40,34 @@ export const SEORichSection: React.FC<SEORichSectionProps> = ({
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-base sm:text-lg font-bold text-white">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900">
                 Strict Adherence to European Central Bank Decision ECB/2013/10
               </h3>
               <p>
                 Operating with counterfeit currency carries grave criminal penalties across the European Union. To provide European film producers, line producers, and art directors with total legal indemnity, our full-print prop bills strictly satisfy Section 2 reproduction criteria:
               </p>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs">
-                <li className="flex items-start gap-2 p-2.5 bg-zinc-900/60 rounded-lg border border-zinc-800">
-                  <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <li className="flex items-start gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-slate-700">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <span><strong>Dimensional Variance:</strong> Sized &gt;125% or &lt;75% of authentic ECB note dimensions.</span>
                 </li>
-                <li className="flex items-start gap-2 p-2.5 bg-zinc-900/60 rounded-lg border border-zinc-800">
-                  <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <li className="flex items-start gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-slate-700">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <span><strong>Indelible Marking:</strong> Crisp "FOR MOTION PICTURE USE ONLY" and "PROP SPECIMEN" text.</span>
                 </li>
-                <li className="flex items-start gap-2 p-2.5 bg-zinc-900/60 rounded-lg border border-zinc-800">
-                  <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <li className="flex items-start gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-slate-700">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <span><strong>Zero Counterfeit Tech:</strong> No genuine foil holograms, watermarks, or magnetic stripes.</span>
                 </li>
-                <li className="flex items-start gap-2 p-2.5 bg-zinc-900/60 rounded-lg border border-zinc-800">
-                  <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <li className="flex items-start gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-slate-700">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <span><strong>Customs Affidavit:</strong> Stamped certificate of manufacture for border and police transit.</span>
                 </li>
               </ul>
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-base sm:text-lg font-bold text-white">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900">
                 Optimized for Generative AI Video & LED Volume Stages
               </h3>
               <p>
@@ -77,45 +77,45 @@ export const SEORichSection: React.FC<SEORichSectionProps> = ({
           </div>
 
           {/* Quick Studio Action Sidebar */}
-          <div className="lg:col-span-4 bg-zinc-900/80 rounded-2xl border border-zinc-800 p-6 sm:p-7 space-y-6 shadow-xl">
+          <div className="lg:col-span-4 bg-slate-50 rounded-2xl border border-slate-200 p-6 sm:p-7 space-y-6 shadow-sm">
             <div>
-              <div className="flex items-center gap-2 text-amber-400 mb-1">
-                <ShieldCheck className="w-4 h-4" />
+              <div className="flex items-center gap-2 text-amber-700 mb-1">
+                <ShieldCheck className="w-4 h-4 text-amber-600" />
                 <span className="text-xs font-mono font-bold uppercase">Studio Safe Harbor</span>
               </div>
-              <h4 className="text-base font-bold text-white mb-2">
+              <h4 className="text-base font-bold text-slate-900 mb-2">
                 Need Set Clearance Documents?
               </h4>
-              <p className="text-xs text-zinc-400 leading-relaxed mb-4">
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
                 Download the official dual-language certificate of manufacture or inspect the legal clause text for municipal film office permits.
               </p>
               <button
                 onClick={onOpenCompliance}
-                className="w-full py-2.5 px-3 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="w-full py-2.5 px-3 bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
               >
-                <FileText className="w-3.5 h-3.5 text-amber-400" />
+                <FileText className="w-3.5 h-3.5 text-amber-600" />
                 <span>View ECB Clearance Guide</span>
               </button>
             </div>
 
-            <div className="pt-6 border-t border-zinc-800">
-              <span className="text-xs font-mono font-bold uppercase text-zinc-400 block mb-1">
+            <div className="pt-6 border-t border-slate-200">
+              <span className="text-xs font-mono font-bold uppercase text-slate-700 block mb-1">
                 Emergency Call Sheet Orders
               </span>
-              <p className="text-xs text-zinc-400 leading-relaxed mb-3">
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
                 Shooting tomorrow morning? Our fulfillment hubs in Berlin, London, Paris, and Rome offer same-day courier drop-off directly to stage addresses.
               </p>
               <button
                 onClick={onOpenQuote}
-                className="w-full py-2.5 px-3 bg-amber-400 text-zinc-950 text-xs font-bold rounded-lg hover:bg-amber-300 transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                className="w-full py-2.5 px-3 bg-amber-400 text-slate-950 text-xs font-bold rounded-lg hover:bg-amber-300 transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
               >
                 <span>Generate Studio PO Quote</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-800 text-[11px] font-mono text-zinc-400 space-y-1">
-              <div className="text-white font-bold">DISPATCH SPEEDS:</div>
+            <div className="p-3 bg-white rounded-xl border border-slate-200 text-[11px] font-mono text-slate-600 space-y-1 shadow-2xs">
+              <div className="text-slate-900 font-bold">DISPATCH SPEEDS:</div>
               <div>• Next-Day Flight Courier (EU & UK)</div>
               <div>• 2-4 Hour Stage Messenger (Berlin / London)</div>
               <div>• Worldwide Express (DHL / FedEx Priority)</div>
