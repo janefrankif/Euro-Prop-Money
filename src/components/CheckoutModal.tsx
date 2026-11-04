@@ -75,6 +75,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const handlePlaceOrder = (e: React.FormEvent) => {
     e.preventDefault();
+    if (subtotal < 150.00) {
+      alert(`Minimum order requirement is €150.00. Please add €{(150.00 - subtotal).toFixed(2)} more in items before placing your order.`);
+      return;
+    }
     if (!termsAccepted) {
       alert('Please agree to the website Terms and Conditions and ECB 2013/10 safe harbor rules.');
       return;
@@ -133,6 +137,18 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
         {/* Modal Scrollable Body */}
         <div className="p-6 overflow-y-auto space-y-6">
+          {!orderConfirmed && subtotal < 150.00 && (
+            <div className="p-4 bg-amber-50 border border-amber-300 rounded-xl text-xs text-amber-900 font-mono flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <div className="font-bold text-amber-950">Minimum Order Requirement: €150.00</div>
+                <p className="text-[11px] text-amber-800">
+                  Your current subtotal is €{subtotal.toFixed(2)}. Please add €{(150.00 - subtotal).toFixed(2)} more in items to meet the €150 minimum order before placing your order.
+                </p>
+              </div>
+            </div>
+          )}
+
           {orderConfirmed ? (
             /* =========================================================================
                WOOCOMMERCE "ORDER RECEIVED" (THANK YOU) PAGE

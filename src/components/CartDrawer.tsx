@@ -13,7 +13,8 @@ import {
   Tag, 
   Check, 
   Truck,
-  RotateCcw
+  RotateCcw,
+  AlertCircle
 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { Product } from '../types';
@@ -350,6 +351,19 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           {/* Drawer Footer & WooCommerce Order Calculation */}
           {items.length > 0 && (
             <div className="p-4 sm:p-6 border-t border-slate-200 bg-slate-50 space-y-4">
+              {/* Minimum Order Warning Banner if below €150 */}
+              {subtotal < 150.00 && (
+                <div className="p-3 bg-amber-50 border border-amber-300 rounded-xl text-xs text-amber-900 font-mono space-y-1">
+                  <div className="font-bold flex items-center gap-1.5 text-amber-950">
+                    <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span>Minimum Order Requirement: €150.00</span>
+                  </div>
+                  <p className="text-[11px] text-amber-800">
+                    Add €{(150.00 - subtotal).toFixed(2)} more to your cart to proceed to checkout.
+                  </p>
+                </div>
+              )}
+
               {/* Financial Calculation Breakdown */}
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between text-slate-600">
@@ -429,12 +443,20 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <div className="space-y-2 pt-1">
                 <button
                   onClick={() => {
+                    if (subtotal < 150.00) {
+                      alert(`Minimum order requirement is €150.00. Please add €{(150.00 - subtotal).toFixed(2)} more in items before checking out.`);
+                      return;
+                    }
                     setIsOpen(false);
                     onOpenCheckout();
                   }}
-                  className="w-full py-3.5 px-4 bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-amber-300 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-[0.99] font-mono"
+                  className={`w-full py-3.5 px-4 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 font-mono shadow-md cursor-pointer ${
+                    subtotal < 150.00
+                      ? 'bg-slate-200 text-slate-400 cursor-not-allowed hover:bg-slate-200 shadow-none'
+                      : 'bg-amber-400 text-slate-950 hover:bg-amber-300 active:scale-[0.99]'
+                  }`}
                 >
-                  <span>Proceed to Checkout</span>
+                  <span>Proceed to Checkout {subtotal < 150.00 ? '(Min €150)' : ''}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
