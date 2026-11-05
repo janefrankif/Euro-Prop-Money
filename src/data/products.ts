@@ -25,6 +25,10 @@ export const PRODUCTS: Product[] = [
     billsPerUnit: 100,
     tag: 'Classical Archway · Grey',
     image: 'https://lh3.googleusercontent.com/d/1Gnad0CEMvltd6CmeBR_Uvi013U1w_O9J',
+    gallery: [
+      'https://lh3.googleusercontent.com/d/15SQSw3qpVCD2ZEcG9u_ABLt0EftVgtD4',
+      'https://lh3.googleusercontent.com/d/15TrRODqP5sOWmncmsqJQGOAsiCo2Bmcf'
+    ],
     description: 'Crisp 100-bill stack of €5 Classical Grey Euro prop notes banded with authentic studio currency strap. Features classical archways and grey-toned architectural engraving with legal "FOR MOTION PICTURE USE ONLY" safe harbor notations. Essential for small-denomination register dressing, everyday wallet reveals, and European street scenes.',
     compliance: {
       standard: 'ECB Decision 2013/10 Section 2(3) Compliant',
@@ -57,6 +61,10 @@ export const PRODUCTS: Product[] = [
     billsPerUnit: 100,
     tag: 'Romanesque Bridge · Red',
     image: 'https://lh3.googleusercontent.com/d/1vL6pqmlLGUiLl0z2myY13WIMprkvb9lb',
+    gallery: [
+      'https://lh3.googleusercontent.com/d/1Qb5_DPBEqn7ZLhm_o8_CmTdaKPZ1QyUt',
+      'https://lh3.googleusercontent.com/d/1A-MK9e5x20uHVHNx6IhY4tfSewDyxOV-'
+    ],
     description: 'Vivid red €10 Euro prop notes stack (100 notes / €1,000 face value) featuring Romanesque architectural bridge motifs. Calibrated for cinematic color balance on RED, ARRI, and Sony Venice sensors without chroma flare under harsh studio lighting.',
     compliance: {
       standard: 'ECB Decision 2013/10 Section 2(3) Compliant',
@@ -89,6 +97,10 @@ export const PRODUCTS: Product[] = [
     billsPerUnit: 100,
     tag: 'Gothic Architecture · Blue',
     image: 'https://lh3.googleusercontent.com/d/1l-dslVX_dQEeoM1q64XUHrf0v5peVcPW',
+    gallery: [
+      'https://lh3.googleusercontent.com/d/10yAT8eal5-obFOmY3NZhp_oJCIyua2sS',
+      'https://lh3.googleusercontent.com/d/1GubfrJf7yg0A8MzOtV0jHmAqzaEcUuDH'
+    ],
     description: 'Realistic €20 Euro prop note stack with vivid gothic architectural window graphics and deep European blue coloration. Wrapped in kraft studio currency band. One of the most frequently filmed banknotes for club scenes, nightlife handshakes, and street drama.',
     compliance: {
       standard: 'ECB Decision 2013/10 Section 2(3) Compliant',
@@ -121,6 +133,10 @@ export const PRODUCTS: Product[] = [
     billsPerUnit: 100,
     tag: 'Renaissance Orange · Top Seller',
     image: 'https://lh3.googleusercontent.com/d/1zmPr1Etu9rIOyjCwV8CA9ZX4oZ6oYPJo',
+    gallery: [
+      'https://lh3.googleusercontent.com/d/15AnxC7QDkKpXcTORo7sgR0hJLeXuNFi7',
+      'https://lh3.googleusercontent.com/d/1s_b7bDIftXYVcO50wsTnsM4biMRcxP9m'
+    ],
     description: 'The most ubiquitous currency in European cinema. Crisp, camera-calibrated 100-bill stack of 50 Euro prop banknotes (€5,000 in props). Accurate Renaissance orange chromatic curve that reads true to life on Log-C and RED raw color pipelines without color shifting.',
     compliance: {
       standard: 'ECB Decision 2013/10 Section 2(3) Compliant',
@@ -153,6 +169,10 @@ export const PRODUCTS: Product[] = [
     billsPerUnit: 100,
     tag: 'Baroque Green · Studio Essential',
     image: 'https://lh3.googleusercontent.com/d/1CY5sm137Pyu_PhENVbAE7MMG-X1b6vU4',
+    gallery: [
+      'https://lh3.googleusercontent.com/d/1-_m-xFQViMKOIqLLhdHZ7BhG5D8nRVZX',
+      'https://lh3.googleusercontent.com/d/1fK1VGBp1mAvNYfHTVFTOCQ9GPhveClT1'
+    ],
     description: 'High-definition 100 Euro prop banknote stack (100 notes / €10,000 face value) banded with studio currency strap. Baroque & Rococo green architectural styling engineered with non-reflective matte bond paper to prevent glare under intense ARRI SkyPanels.',
     compliance: {
       standard: 'ECB Decision 2013/10 Section 2(3) Compliant',
@@ -185,6 +205,10 @@ export const PRODUCTS: Product[] = [
     billsPerUnit: 100,
     tag: 'Industrial Gold · High Roller',
     image: 'https://lh3.googleusercontent.com/d/1A6j_Z9zVch9U2CsqMC7G5I3MK0-9kh7l',
+    gallery: [
+      'https://lh3.googleusercontent.com/d/1x-ZupOLjQBYWmLp6Cn0ruPBR1BCPPodI',
+      'https://lh3.googleusercontent.com/d/1YYY5uYYSzY4wR89dqs1SUixxFCSAJNWo'
+    ],
     description: 'Opulent golden-yellow 200 Euro prop banknote stack (100 notes / €20,000 face value) featuring 19th-century iron-and-glass architectural styling. High contrast detailing designed specifically for casino VIP suites, luxury yacht scenes, and executive extortion storylines.',
     compliance: {
       standard: 'ECB Decision 2013/10 Section 2(3) Compliant',
@@ -217,6 +241,10 @@ export const PRODUCTS: Product[] = [
     billsPerUnit: 100,
     tag: 'Syndicate Purple · Discontinued Legend',
     image: 'https://lh3.googleusercontent.com/d/1AR7svTPl3lq6ABDHIDt0p2ap6dpgIvSx',
+    gallery: [
+      'https://lh3.googleusercontent.com/d/1rGVE7KJhnyZjUHzhd2eBIZFqfHWx19kK',
+      'https://lh3.googleusercontent.com/d/15cBhKcVLyHH1sdvPK_57lzaCCVoaRvs3'
+    ],
     description: 'Iconic purple 500 Euro prop stack. In high demand by filmmakers because genuine €500 notes were discontinued by the ECB in 2019, making our legal prop specimens essential for criminal syndicate storylines.',
     compliance: {
       standard: 'ECB Decision 2013/10 Section 2(3) Compliant',

@@ -153,7 +153,15 @@ export const SingleProductPage: React.FC<SingleProductPageProps> = ({
               {/* Product Image */}
               {!imageError ? (
                 <img
-                  src={product.image}
+                  src={
+                    activeImageIndex === 1 && product.gallery && product.gallery[0]
+                      ? product.gallery[0]
+                      : activeImageIndex === 2 && product.gallery && product.gallery[1]
+                      ? product.gallery[1]
+                      : activeImageIndex === 3 && product.gallery && product.gallery[0]
+                      ? product.gallery[0]
+                      : product.image
+                  }
                   alt={product.name}
                   onError={() => setImageError(true)}
                   className={`w-full h-full object-cover object-center transition-all duration-500 ${
@@ -231,20 +239,33 @@ export const SingleProductPage: React.FC<SingleProductPageProps> = ({
 
             {/* Thumbnail Gallery Navigation */}
             <div className="grid grid-cols-4 gap-3">
-              {galleryViews.map((view, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveImageIndex(idx)}
-                  className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
-                    activeImageIndex === idx
-                      ? 'bg-amber-50/70 border-amber-400 ring-1 ring-amber-400/50 shadow-2xs'
-                      : 'bg-slate-50 border-slate-200 hover:border-slate-300'
-                  }`}
-                >
-                  <span className="text-[11px] font-bold text-slate-900 block truncate">{view.label}</span>
-                  <span className="text-[10px] font-mono text-slate-500 block truncate mt-1">{view.note}</span>
-                </button>
-              ))}
+              {galleryViews.map((view, idx) => {
+                const thumbImg = 
+                  idx === 1 && product.gallery && product.gallery[0]
+                    ? product.gallery[0]
+                    : idx === 2 && product.gallery && product.gallery[1]
+                    ? product.gallery[1]
+                    : idx === 3 && product.gallery && product.gallery[0]
+                    ? product.gallery[0]
+                    : product.image;
+
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveImageIndex(idx)}
+                    className={`p-2 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between overflow-hidden ${
+                      activeImageIndex === idx
+                        ? 'bg-amber-50/70 border-amber-400 ring-1 ring-amber-400/50 shadow-2xs'
+                        : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+                    }`}
+                  >
+                    <div className="w-full h-12 rounded-lg overflow-hidden mb-1.5 bg-slate-950">
+                      <img src={thumbImg} alt={view.label} className="w-full h-full object-cover" />
+                    </div>
+                    <span className="text-[10px] font-bold text-slate-900 block truncate">{view.label}</span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Studio Prop Guarantee Card */}

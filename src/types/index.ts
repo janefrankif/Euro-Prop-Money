@@ -33,6 +33,7 @@ export interface Product {
   billsPerUnit: number;
   compliance: ProductCompliance;
   image: string;
+  gallery?: string[];
   tag?: string;
   description: string;
   specifications: ProductSpecifications;

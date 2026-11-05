@@ -36,7 +36,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const { items, getTotal, getSubtotal, getDiscount, clearCart } = useCartStore();
 
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('bacs');
-  const [shippingMethod, setShippingMethod] = useState<'free' | 'express'>('free');
+  const [shippingMethod, setShippingMethod] = useState<'standard' | 'express'>('standard');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [orderConfirmed, setOrderConfirmed] = useState<boolean>(false);
   const [orderId, setOrderId] = useState<string>('');
@@ -62,7 +62,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const subtotal = getSubtotal();
   const discount = getDiscount();
-  const shippingCost = shippingMethod === 'express' ? 15.00 : 0.00;
+  const shippingCost = shippingMethod === 'express' ? 50.00 : 20.00;
   const grandTotal = getTotal() + shippingCost;
 
   if (!isOpen) return null;
@@ -630,13 +630,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                           <input
                             type="radio"
                             name="shippingMethod"
-                            checked={shippingMethod === 'free'}
-                            onChange={() => setShippingMethod('free')}
+                            checked={shippingMethod === 'standard'}
+                            onChange={() => setShippingMethod('standard')}
                             className="text-amber-500 focus:ring-amber-400"
                           />
-                          <span className="text-[11px] text-slate-800">Free Standard Studio Courier</span>
+                          <span className="text-[11px] text-slate-800">Standard European Courier</span>
                         </div>
-                        <span className="font-bold text-emerald-700">€0.00</span>
+                        <span className="font-bold text-slate-900">€20.00</span>
                       </label>
 
                       <label className="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200 cursor-pointer">
@@ -650,7 +650,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                           />
                           <span className="text-[11px] text-slate-800">24H Express Stage Dispatch</span>
                         </div>
-                        <span className="font-bold text-slate-900">€15.00</span>
+                        <span className="font-bold text-slate-900">€50.00</span>
                       </label>
                     </div>
 

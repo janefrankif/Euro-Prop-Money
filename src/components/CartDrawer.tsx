@@ -52,7 +52,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; percent: number } | null>(null);
   const [couponError, setCouponError] = useState<string | null>(null);
   const [couponSuccess, setCouponSuccess] = useState<string | null>(null);
-  const [shippingOption, setShippingOption] = useState<'free' | 'express'>('free');
+  const [shippingOption, setShippingOption] = useState<'standard' | 'express'>('standard');
 
   const subtotal = getSubtotal();
   const volumeDiscount = getDiscount();
@@ -65,7 +65,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     : 0;
 
   const totalDiscount = Math.max(volumeDiscount.amount, couponDiscountAmount);
-  const shippingFee = shippingOption === 'express' ? 15.0 : 0.0;
+  const shippingFee = shippingOption === 'express' ? 50.0 : 20.0;
   const grandTotal = Math.max(0, subtotal - totalDiscount + shippingFee);
 
   if (!isOpen) return null;
@@ -394,22 +394,22 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       <span>Shipping:</span>
                     </span>
                     <span className="font-mono text-slate-900 font-bold">
-                      {shippingOption === 'free' ? 'Free Courier' : '€15.00 (Express)'}
+                      {shippingOption === 'standard' ? '€20.00 (Standard)' : '€50.00 (Express)'}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2 pt-1">
                     <button
                       type="button"
-                      onClick={() => setShippingOption('free')}
+                      onClick={() => setShippingOption('standard')}
                       className={`px-2.5 py-1.5 rounded-lg border text-[11px] text-left font-mono transition-colors cursor-pointer ${
-                        shippingOption === 'free' 
+                        shippingOption === 'standard' 
                           ? 'border-amber-400 bg-amber-50/70 text-slate-900 font-bold' 
                           : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                       }`}
                     >
-                      <div className="truncate">Standard (Free)</div>
-                      <div className="text-[10px] text-emerald-700 font-semibold">2-4 Days</div>
+                      <div className="truncate">Standard (€20)</div>
+                      <div className="text-[10px] text-slate-600 font-semibold">2-4 Days</div>
                     </button>
 
                     <button
@@ -421,7 +421,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                           : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                       }`}
                     >
-                      <div className="truncate">Express Stage (€15)</div>
+                      <div className="truncate">Express Stage (€50)</div>
                       <div className="text-[10px] text-amber-800 font-semibold">24H Soundstage</div>
                     </button>
                   </div>
