@@ -16,6 +16,7 @@ export const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCate
       icon: Layers,
       highlight: 'From €19.00',
       actionCategory: 'single',
+      image: 'https://lh3.googleusercontent.com/d/1JADWgDXDuLhf3BcX0rx3TTo7YEq4OOqT=s0',
     },
     {
       id: 'bundles',
@@ -25,6 +26,7 @@ export const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCate
       icon: Briefcase,
       highlight: 'Turnkey Heist Sets',
       actionCategory: 'bundles',
+      image: 'https://lh3.googleusercontent.com/d/1p-5VyjZP2bC7DYQoUwtsPjvutWCI3NrE=s0',
     },
     {
       id: 'special',
@@ -34,6 +36,7 @@ export const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCate
       icon: Sparkles,
       highlight: 'Close-Up Calibrated',
       actionCategory: 'special',
+      image: 'https://lh3.googleusercontent.com/d/1X_YWDfnh0PzXeJqlYVdpgl9vC0JiftNN=s0',
     },
   ];
 
@@ -54,7 +57,7 @@ export const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCate
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {categories.map((cat) => {
             const Icon = cat.icon;
             const categoryUrl = `/shop?category=${cat.actionCategory}`;
@@ -63,31 +66,51 @@ export const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCate
                 key={cat.id}
                 to={categoryUrl}
                 onClick={() => onSelectCategory(cat.actionCategory)}
-                className="group relative rounded-2xl bg-white border border-slate-200 p-7 flex flex-col justify-between hover:border-amber-400 transition-all duration-300 cursor-pointer hover:-translate-y-1 shadow-sm hover:shadow-md block"
+                className="group relative rounded-2xl bg-white border border-slate-200 overflow-hidden flex flex-col justify-between hover:border-amber-400 transition-all duration-300 cursor-pointer hover:-translate-y-1 shadow-sm hover:shadow-xl block"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-slate-100 group-hover:bg-amber-50 text-slate-600 group-hover:text-amber-600 flex items-center justify-center transition-colors">
-                      <Icon className="w-6 h-6" />
+                  {/* Category Image Header */}
+                  <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-slate-950">
+                    <img 
+                      src={cat.image} 
+                      alt={cat.title}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+                    
+                    {/* Badge Overlay */}
+                    <div className="absolute top-3 right-3 z-10">
+                      <span className="text-[11px] font-mono font-bold text-amber-300 bg-slate-950/85 backdrop-blur-md px-2.5 py-1 rounded-lg border border-amber-500/30 shadow-md">
+                        {cat.highlight}
+                      </span>
                     </div>
-                    <span className="text-xs font-mono font-semibold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200">
-                      {cat.highlight}
-                    </span>
+
+                    <div className="absolute bottom-3 left-3 right-3 z-10">
+                      <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-emerald-400 bg-slate-950/85 backdrop-blur-md px-2 py-0.5 rounded border border-emerald-500/30">
+                        ECB Safe Harbor
+                      </span>
+                    </div>
                   </div>
 
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors mb-1">
-                    {cat.title}
-                  </h3>
-                  <div className="text-xs font-mono text-slate-500 mb-3">
-                    {cat.subtitle}
+                  {/* Content Body */}
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors mb-1">
+                      {cat.title}
+                    </h3>
+                    <div className="text-xs font-mono text-slate-500 mb-3">
+                      {cat.subtitle}
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {cat.description}
+                    </p>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    {cat.description}
-                  </p>
                 </div>
 
-                <div className="pt-5 mt-6 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-600 group-hover:text-slate-900 transition-colors">
-                  <span>Browse {cat.title}</span>
+                <div className="px-6 pb-6 pt-0 mt-auto flex items-center justify-between text-xs font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
+                  <span className="flex items-center gap-1.5 text-amber-700 group-hover:text-amber-800">
+                    <Icon className="w-4 h-4" />
+                    <span>Browse {cat.title}</span>
+                  </span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-amber-600" />
                 </div>
               </Link>

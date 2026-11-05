@@ -11,10 +11,20 @@ export const StudioTrustSection: React.FC<StudioTrustSectionProps> = ({
   onOpenQuote,
 }) => {
   return (
-    <section id="about" className="w-full py-16 lg:py-24 border-b border-slate-200 bg-slate-50/60 scroll-mt-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="about" className="relative w-full py-20 lg:py-28 border-b border-slate-200 overflow-hidden scroll-mt-16 bg-slate-900">
+      {/* Background Cover Image Maintaining Original Color */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <img
+          src="https://lh3.googleusercontent.com/d/1VDf-8HdkB1RscU6O3kgxKN5MSq9LKaFa=s0"
+          alt="Studio Trust Background"
+          className="w-full h-full object-cover object-center opacity-95"
+        />
+        <div className="absolute inset-0 bg-slate-950/30" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-2xl mb-12">
+        <div className="max-w-2xl mb-12 p-6 sm:p-8 rounded-2xl bg-white/90 backdrop-blur-md border border-white/40 shadow-xl">
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-700 font-semibold mb-2">
             <span>Production Trust & Verification</span>
             <span aria-hidden="true" className="text-slate-300">·</span>
@@ -23,7 +33,7 @@ export const StudioTrustSection: React.FC<StudioTrustSectionProps> = ({
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
             Built To Withstand 8K Lenses And Customs Audits
           </h2>
-          <p className="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed">
+          <p className="mt-3 text-slate-700 text-sm sm:text-base leading-relaxed">
             From emergency reshoots at Pinewood to heist sequences on the streets of Marseille, our prop currency satisfies European legal regulations while delivering indistinguishable realism on monitor playbacks.
           </p>
         </div>
