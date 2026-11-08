@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { X, Calendar, Clock, Tag, ShieldCheck } from 'lucide-react';
 import { BlogPost } from '../data/blog';

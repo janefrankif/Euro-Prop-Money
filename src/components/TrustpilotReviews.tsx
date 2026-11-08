@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Star, CheckCircle, ChevronLeft, ChevronRight, ShieldCheck, Film, Sparkles } from 'lucide-react';
 import { TRUSTPILOT_REVIEWS, Review } from '../data/reviews';

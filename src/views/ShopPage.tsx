@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
 import { Search, SlidersHorizontal, X, ArrowUpDown, ShieldCheck, Sparkles, ShoppingBag, Layers, Briefcase, Zap } from 'lucide-react';
 import { Product, CoreCategory } from '../types';

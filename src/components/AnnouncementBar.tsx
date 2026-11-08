@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Truck, ShieldCheck, Zap, Headphones, Coins, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
 

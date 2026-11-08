@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { X, Film, ShieldCheck, Truck, Award, Users, CheckCircle } from 'lucide-react';
 

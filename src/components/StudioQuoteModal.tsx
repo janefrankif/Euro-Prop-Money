@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, Printer, Copy, Check, FileText, ShieldCheck } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';

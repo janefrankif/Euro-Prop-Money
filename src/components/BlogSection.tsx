@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ArrowRight, BookOpen, Clock, Calendar } from 'lucide-react';
 import { BLOG_POSTS, BlogPost } from '../data/blog';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Send, Check, Clock, ShieldCheck, MessageCircle, Calendar, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link } from '../router';

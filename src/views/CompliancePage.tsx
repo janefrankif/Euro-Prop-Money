@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ShieldCheck, CheckCircle2, AlertTriangle, FileText, Download, Printer, ArrowRight } from 'lucide-react';
 import { Link } from '../router';

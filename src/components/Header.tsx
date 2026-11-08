@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { ShoppingBag, ShieldCheck, Menu, X, Zap, Phone, ChevronDown, Layers, Briefcase, Sparkles } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';

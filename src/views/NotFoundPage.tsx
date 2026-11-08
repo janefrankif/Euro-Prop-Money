@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ShieldAlert, ArrowLeft, ShoppingBag } from 'lucide-react';
 import { Link } from '../router';

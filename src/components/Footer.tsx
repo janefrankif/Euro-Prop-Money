@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ShieldCheck, ArrowUp, Scale, FileText, Lock, RefreshCw, Truck, MapPin } from 'lucide-react';
 import { SiteLogo } from './SiteLogo';

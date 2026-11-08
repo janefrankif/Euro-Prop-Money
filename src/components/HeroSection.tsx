@@ -1,9 +1,16 @@
+'use client';
+
 import React from 'react';
 import { ArrowRight, ShieldCheck, Zap, Video, Award, Layers } from 'lucide-react';
 import heroCoverLocal from '../assets/images/hero_cover.jpg';
 
 // Google Drive stream CDN URL corresponding to 1KF3WYnQ9j_H7sIdIAwM6pSflQhBdvgSH/view?usp=sharing
 const NEW_HERO_IMAGE_URL = 'https://lh3.googleusercontent.com/d/1KF3WYnQ9j_H7sIdIAwM6pSflQhBdvgSH';
+
+const heroCoverLocalSrc =
+  typeof heroCoverLocal === 'string'
+    ? heroCoverLocal
+    : (heroCoverLocal as unknown as { src?: string })?.src || '';
 
 // Next.js-compatible Image component implementation for Vite/React SPA environment
 interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -29,8 +36,8 @@ const Image: React.FC<ImageProps> = ({
       className={`${fill ? 'absolute inset-0 w-full h-full' : ''} ${className}`}
       onError={(e) => {
         // Fallback to locally cached copy if direct Drive URL is inaccessible
-        if ((e.currentTarget as HTMLImageElement).src !== heroCoverLocal) {
-          (e.currentTarget as HTMLImageElement).src = heroCoverLocal;
+        if (heroCoverLocalSrc && (e.currentTarget as HTMLImageElement).src !== heroCoverLocalSrc) {
+          (e.currentTarget as HTMLImageElement).src = heroCoverLocalSrc;
         }
       }}
       {...props}
@@ -51,7 +58,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     <section className="relative w-full h-screen overflow-hidden flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
       {/* 1. Full-Cover Hero Background Image via Next.js-style <Image> with fill & priority */}
       <Image
-        src={heroCoverLocal || NEW_HERO_IMAGE_URL}
+        src={heroCoverLocalSrc || NEW_HERO_IMAGE_URL}
         alt="Euro 500 prop money stack on cinematic marble surface - Full Cover Hero"
         fill
         priority={true}

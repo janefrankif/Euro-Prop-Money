@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, ShieldCheck, FileText, Lock, RefreshCw, Truck, Printer, Scale } from 'lucide-react';
 

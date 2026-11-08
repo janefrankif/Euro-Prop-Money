@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Layers, Briefcase, Sparkles, ArrowRight } from 'lucide-react';
 import { Link } from '../router';

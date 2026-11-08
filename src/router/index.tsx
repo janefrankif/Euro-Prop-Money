@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { Product } from '../types';
 import { PRODUCTS } from '../data/products';
@@ -143,7 +145,14 @@ interface RouterContextType {
   navigateToCategory: (category: string) => void;
 }
 
-const RouterContext = createContext<RouterContextType | null>(null);
+const defaultRouterValue: RouterContextType = {
+  route: { view: 'home', path: '/' },
+  navigate: () => {},
+  navigateToProduct: () => {},
+  navigateToCategory: () => {},
+};
+
+const RouterContext = createContext<RouterContextType>(defaultRouterValue);
 
 export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [route, setRoute] = useState<RouteState>(() => parseCurrentLocation());
@@ -246,10 +255,7 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
 export function useRouter() {
   const context = useContext(RouterContext);
-  if (!context) {
-    throw new Error('useRouter must be used within a RouterProvider');
-  }
-  return context;
+  return context || defaultRouterValue;
 }
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {

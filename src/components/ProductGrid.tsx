@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { Product, ProductCategory, PrintType, Denomination } from '../types';

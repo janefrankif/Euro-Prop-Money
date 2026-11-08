@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, Sun, Lamp, ZoomIn, ZoomOut, ShieldCheck, Check, ShoppingBag, Eye, RefreshCw } from 'lucide-react';
 import { Product, PrintType, FinishType } from '../types';

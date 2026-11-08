@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Home, Layers, Info, ShoppingBag } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';

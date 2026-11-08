@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { RouterProvider, useRouter } from './router';
 import { AnnouncementBar } from './components/AnnouncementBar';
@@ -11,15 +13,15 @@ import { BlogModal } from './components/BlogModal';
 import { LegalModal, LegalTab } from './components/LegalModal';
 import { MobileBottomNav } from './components/MobileBottomNav';
 
-// Distinct WooCommerce Pages
-import { HomePage } from './pages/HomePage';
-import { ShopPage } from './pages/ShopPage';
-import { AboutPage } from './pages/AboutPage';
-import { ContactPage } from './pages/ContactPage';
-import { BlogPage } from './pages/BlogPage';
-import { CompliancePage } from './pages/CompliancePage';
-import { SingleProductPage } from './pages/SingleProductPage';
-import { NotFoundPage } from './pages/NotFoundPage';
+// Distinct WooCommerce Views
+import { HomePage } from './views/HomePage';
+import { ShopPage } from './views/ShopPage';
+import { AboutPage } from './views/AboutPage';
+import { ContactPage } from './views/ContactPage';
+import { BlogPage } from './views/BlogPage';
+import { CompliancePage } from './views/CompliancePage';
+import { SingleProductPage } from './views/SingleProductPage';
+import { NotFoundPage } from './views/NotFoundPage';
 
 import { Product } from './types';
 import { PRODUCTS } from './data/products';

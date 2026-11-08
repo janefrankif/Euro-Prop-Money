@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Film, ShieldCheck, Truck, Award, Users, CheckCircle, ArrowRight, Video, FileText, MapPin } from 'lucide-react';
 import { HERO_IMAGE } from '../data/products';
