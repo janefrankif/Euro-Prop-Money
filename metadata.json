@@ -1,0 +1,6 @@
+{
+  "name": "CINE EURO - Studio Grade Prop Money",
+  "description": "Cinema-grade, legally compliant Euro prop currency bundles, stacks, and production bags for film studios, directors, and content creators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
