@@ -266,15 +266,13 @@ export async function POST(req: NextRequest) {
                 Your prop currency order <strong>#${orderId}</strong> has been received by our Berlin Vault Dispatch Desk. Our art department coordinators are processing your requisition.
               </p>
 
-              <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; margin: 20px 0;">
+              <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin: 20px 0;">
                 <h4 style="margin: 0 0 8px 0; font-size: 13px; font-family: monospace; text-transform: uppercase; color: #d97706;">
-                  Payment Instructions (${paymentMethodLabel})
+                  Payment Details (${paymentMethodLabel})
                 </h4>
-                ${
-                  paymentMethod === 'usdt'
-                    ? `<p style="margin: 0; font-size: 12px; color: #334155;">Please complete your Tether (TRC-20) deposit to our dedicated vault wallet. Upon 1 network confirmation, your order will automatically update to <strong>Vault Dispatch</strong>.</p>`
-                    : `<p style="margin: 0; font-size: 12px; color: #334155;">Please transfer <strong>€${totalPayable.toFixed(2)}</strong> referencing order ID <strong>#${orderId}</strong>. EU VAT 0% reverse-charge tax invoices will be issued upon payment confirmation.</p>`
-                }
+                <p style="margin: 0; font-size: 12px; color: #334155; line-height: 1.5;">
+                  Specific payment details (wire IBAN/SWIFT or USDT deposit wallet address) for Order ID <strong>#${orderId}</strong> will be provided directly by our Vault Dispatch team upon reviewing your new order.
+                </p>
               </div>
 
               <!-- Order Summary Table -->

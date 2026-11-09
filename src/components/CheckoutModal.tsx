@@ -16,7 +16,8 @@ import {
   AlertCircle,
   FileText,
   ChevronRight,
-  ShoppingBag
+  ShoppingBag,
+  Clock
 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 
@@ -235,155 +236,47 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 </div>
               </div>
 
-              {/* PAYMENT DETAILS SECTION (Provided strictly AFTER order has been registered) */}
-              {paymentMethod === 'bacs' ? (
-                /* Bank Transfer Payment Details */
-                <div className="bg-slate-50 border-2 border-amber-400/80 rounded-2xl p-5 sm:p-6 space-y-4">
-                  <div className="flex items-center justify-between pb-3 border-b border-slate-200">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-amber-400 text-slate-950 flex items-center justify-center">
-                        <Building2 className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">
-                          Our Bank Details
-                        </h4>
-                        <p className="text-[11px] text-slate-500">
-                          Please transfer the order total directly to our European banking account.
-                        </p>
-                      </div>
+              {/* PAYMENT DETAILS SECTION (Payment details provided upon new order processing) */}
+              <div className="bg-slate-50 border-2 border-amber-400/80 rounded-2xl p-5 sm:p-6 space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-amber-400 text-slate-950 flex items-center justify-center">
+                      {paymentMethod === 'bacs' ? <Building2 className="w-4 h-4" /> : <Coins className="w-4 h-4" />}
                     </div>
-                    <span className="text-xs font-mono font-bold bg-amber-100 text-amber-900 px-2.5 py-1 rounded">
-                      SEPA / Swift BACS
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
-                    <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-                      <span className="text-slate-500 text-[10px] uppercase block">Bank Name</span>
-                      <span className="font-bold text-slate-900 text-sm">Deutsche Bundes-Film Bank AG</span>
-                    </div>
-
-                    <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-                      <span className="text-slate-500 text-[10px] uppercase block">Account Holder Name</span>
-                      <span className="font-bold text-slate-900 text-sm">Euro Prop Money Studios Ltd</span>
-                    </div>
-
-                    <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1 sm:col-span-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-500 text-[10px] uppercase">IBAN</span>
-                        <button
-                          onClick={() => handleCopy('DE89 3704 0044 0532 0130 10', 'iban')}
-                          className="text-[11px] text-amber-700 hover:text-amber-800 flex items-center gap-1 font-sans font-semibold cursor-pointer"
-                        >
-                          {copiedText === 'iban' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                          <span>{copiedText === 'iban' ? 'Copied' : 'Copy IBAN'}</span>
-                        </button>
-                      </div>
-                      <span className="font-bold text-slate-900 text-base tracking-wider block select-all">
-                        DE89 3704 0044 0532 0130 10
-                      </span>
-                    </div>
-
-                    <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-500 text-[10px] uppercase">BIC / SWIFT</span>
-                        <button
-                          onClick={() => handleCopy('DBFBDEBBXXX', 'bic')}
-                          className="text-[11px] text-amber-700 hover:text-amber-800 flex items-center gap-1 font-sans font-semibold cursor-pointer"
-                        >
-                          {copiedText === 'bic' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                          <span>{copiedText === 'bic' ? 'Copied' : 'Copy'}</span>
-                        </button>
-                      </div>
-                      <span className="font-bold text-slate-900 text-sm">DBFBDEBBXXX</span>
-                    </div>
-
-                    <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-500 text-[10px] uppercase">Payment Reference</span>
-                        <button
-                          onClick={() => handleCopy(orderId, 'ref')}
-                          className="text-[11px] text-amber-700 hover:text-amber-800 flex items-center gap-1 font-sans font-semibold cursor-pointer"
-                        >
-                          {copiedText === 'ref' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                          <span>{copiedText === 'ref' ? 'Copied' : 'Copy'}</span>
-                        </button>
-                      </div>
-                      <span className="font-bold text-amber-700 text-sm">{orderId}</span>
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">
+                        {paymentMethod === 'bacs' ? 'Direct Bank Transfer' : 'USDT (Tether Crypto)'}
+                      </h4>
+                      <p className="text-[11px] text-slate-500">
+                        Payment details will be provided for your new order requisition
+                      </p>
                     </div>
                   </div>
-
-                  <div className="p-3.5 bg-amber-50/70 border border-amber-200 rounded-xl text-xs text-amber-900 leading-relaxed flex items-start gap-2">
-                    <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                    <span>
-                      <strong>Important:</strong> Please include your Order ID <strong>{orderId}</strong> as the payment reference. Once your bank wire is initiated, notify our on-set dispatch desk for immediate staging and packaging.
-                    </span>
-                  </div>
+                  <span className="text-xs font-mono font-bold bg-amber-100 text-amber-900 px-2.5 py-1 rounded">
+                    {paymentMethod === 'bacs' ? 'SEPA / Swift Wire' : 'TRC-20 Wallet'}
+                  </span>
                 </div>
-              ) : (
-                /* USDT Cryptocurrency Payment Details */
-                <div className="bg-slate-50 border-2 border-emerald-400/80 rounded-2xl p-5 sm:p-6 space-y-4">
-                  <div className="flex items-center justify-between pb-3 border-b border-slate-200">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
-                        <Coins className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">
-                          USDT (Tether) Deposit Instructions
-                        </h4>
-                        <p className="text-[11px] text-slate-500">
-                          Instant blockchain settlement · 1 confirmation for automatic dispatch
-                        </p>
-                      </div>
-                    </div>
-                    <span className="text-xs font-mono font-bold bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded">
-                      TRC-20 & ERC-20
-                    </span>
+
+                <div className="p-4 bg-white border border-slate-200 rounded-xl space-y-2 text-xs leading-relaxed text-slate-700">
+                  <div className="flex items-center gap-2 font-bold text-slate-900 font-mono text-sm">
+                    <Clock className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span>Payment details will be provided upon new order</span>
                   </div>
-
-                  <div className="space-y-3 font-mono text-xs">
-                    <div className="p-3.5 bg-white border border-slate-200 rounded-xl space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-500 text-[10px] uppercase font-bold">
-                          USDT Deposit Address (TRC-20 Recommended for Zero Fees)
-                        </span>
-                        <button
-                          onClick={() => handleCopy('TLa9m2K8E9X2qJ3rP7zC5vB4nQ1wY6uE8D', 'usdt')}
-                          className="text-[11px] text-emerald-700 hover:text-emerald-800 flex items-center gap-1 font-sans font-semibold cursor-pointer"
-                        >
-                          {copiedText === 'usdt' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                          <span>{copiedText === 'usdt' ? 'Copied' : 'Copy Address'}</span>
-                        </button>
-                      </div>
-                      <div className="font-bold text-slate-900 text-sm break-all select-all bg-slate-50 p-2 rounded-lg border border-slate-200">
-                        TLa9m2K8E9X2qJ3rP7zC5vB4nQ1wY6uE8D
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-                        <span className="text-slate-500 text-[10px] uppercase">Exact USDT Amount Due</span>
-                        <span className="font-bold text-emerald-700 text-base block">
-                          {(grandTotal * 1.08).toFixed(2)} USDT <span className="text-xs text-slate-500 font-normal">(€{grandTotal.toFixed(2)})</span>
-                        </span>
-                      </div>
-                      <div className="p-3 bg-white border border-slate-200 rounded-xl space-y-1">
-                        <span className="text-slate-500 text-[10px] uppercase">Order Payment Reference</span>
-                        <span className="font-bold text-slate-900 text-sm block">{orderId}</span>
-                      </div>
-                    </div>
-
-                    <div className="p-3.5 bg-emerald-50/70 border border-emerald-200 rounded-xl text-xs text-emerald-900 leading-relaxed flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>
-                        <strong>Blockchain Detection:</strong> Send USDT to the address above. Upon 1 network confirmation, your order will automatically update to <strong>"Processing & Vault Dispatch"</strong>.
-                      </span>
-                    </div>
-                  </div>
+                  <p>
+                    Specific settlement details (banking IBAN/BIC/SWIFT for bank wire or dedicated USDT deposit wallet address) for Order <strong className="text-amber-700">{orderId}</strong> will be provided directly by our Vault Dispatch team upon reviewing your requisition.
+                  </p>
+                  <p className="text-slate-500 text-[11px]">
+                    An email with order summary and dispatch instructions has been transmitted to <strong className="text-slate-700">{formData.email}</strong> and dispatched to <strong className="text-slate-700">dispatch@europropmoney.de</strong>.
+                  </p>
                 </div>
-              )}
+
+                <div className="p-3.5 bg-amber-50/70 border border-amber-200 rounded-xl text-xs text-amber-900 leading-relaxed flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <span>
+                    <strong>Next Step:</strong> Please check your email for Order ID <strong>{orderId}</strong>. Our on-set dispatch desk will provide your payment details upon order processing.
+                  </span>
+                </div>
+              </div>
 
               {/* Order Items Table & Delivery Summary */}
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4 text-xs">
@@ -731,7 +624,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
                       {paymentMethod === 'bacs' && (
                         <div className="px-3.5 pb-3.5 text-[11px] text-slate-600 leading-relaxed border-t border-slate-100 pt-2.5">
-                          Make your payment directly into our bank account. Please use your Order ID as the payment reference. Complete bank account details (IBAN, BIC/SWIFT) will be provided on the order confirmation screen and sent to your email after your order has been registered.
+                          Make your payment directly into our bank account. Complete bank account details (IBAN, BIC/SWIFT) and payment instructions will be provided upon your new order submission and sent to your email.
                         </div>
                       )}
                     </div>
@@ -760,7 +653,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
                       {paymentMethod === 'usdt' && (
                         <div className="px-3.5 pb-3.5 text-[11px] text-slate-600 leading-relaxed border-t border-slate-100 pt-2.5">
-                          Pay with USDT (Tether). Fast, secure, and ideal for confidential or emergency soundstage dispatches. The designated deposit wallet address and QR code will be provided after your order has been registered on the order received page.
+                          Pay with USDT (Tether). Fast, secure, and ideal for confidential or emergency soundstage dispatches. Designated deposit wallet details will be provided upon your new order submission.
                         </div>
                       )}
                     </div>

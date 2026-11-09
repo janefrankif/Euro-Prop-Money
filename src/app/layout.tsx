@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  verification: {
+    google: 'UEEy6AntodYzc7Vc6Zcl5rtaQat9YfgYObO1YM23xrM',
+  },
   openGraph: {
     title: 'CINE EURO - Studio Grade Prop Money',
     description:
@@ -42,6 +45,9 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="dark scroll-smooth">
+      <head>
+        <meta name="google-site-verification" content="UEEy6AntodYzc7Vc6Zcl5rtaQat9YfgYObO1YM23xrM" />
+      </head>
       <body
         className="bg-white text-slate-900 antialiased selection:bg-amber-400 selection:text-slate-950"
         style={{

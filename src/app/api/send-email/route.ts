@@ -192,9 +192,7 @@ export async function POST(req: NextRequest) {
                   Settlement Method: ${paymentMethodLabel}
                 </h4>
                 <p style="margin: 0; font-size: 12px; color: #334155; line-height: 1.5;">
-                  ${body.paymentMethod === 'usdt'
-                    ? 'Please complete your Tether (TRC-20) payment referencing order ID <strong>#' + orderId + '</strong>. Once 1 network confirmation is received, your order proceeds directly to packaging.'
-                    : 'Please execute your transfer of <strong>€' + totalPayable.toFixed(2) + '</strong> referencing order ID <strong>#' + orderId + '</strong>. EU VAT 0% reverse-charge tax invoices are issued upon payment reception.'}
+                  Specific payment details (wire IBAN/SWIFT or USDT deposit wallet address) for Order ID <strong>#${orderId}</strong> will be provided directly by our Vault Dispatch team upon reviewing your new order.
                 </p>
               </div>
 
