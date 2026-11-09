@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 160" width="100%" height="100%">
+  <defs>
+    <linearGradient id="logoBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B2332"/>
+      <stop offset="50%" stop-color="#6E1824"/>
+      <stop offset="100%" stop-color="#4A0D16"/>
+    </linearGradient>
+    <linearGradient id="logoGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE5B2"/>
+      <stop offset="35%" stop-color="#E2B766"/>
+      <stop offset="70%" stop-color="#C7903E"/>
+      <stop offset="100%" stop-color="#996820"/>
+    </linearGradient>
+    <linearGradient id="goldBrightLogo" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#D49B44"/>
+      <stop offset="100%" stop-color="#FFF8E7"/>
+    </linearGradient>
+    <filter id="logoShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Left Icon Emblem Box -->
+  <g transform="translate(10, 10)">
+    <rect x="0" y="0" width="140" height="140" rx="28" fill="url(#logoBgGrad)" stroke="url(#logoGold)" stroke-width="3" filter="url(#logoShadow)"/>
+    <rect x="6" y="6" width="128" height="128" rx="22" fill="none" stroke="url(#logoGold)" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+
+    <!-- Mini Steer Emblem Inside Box -->
+    <g transform="translate(18, 16) scale(0.24)" fill="url(#logoGold)">
+      <!-- Horns -->
+      <path d="M256 120 C280 120 340 128 376 172 C390 188 394 206 388 214 C382 222 366 216 354 202 C332 176 298 168 256 168 C214 168 180 176 158 202 C146 216 130 222 124 214 C118 206 122 188 136 172 C172 128 232 120 256 120 Z" />
+      <!-- Face -->
+      <path d="M256 160 C292 160 326 174 336 210 C344 240 334 274 322 308 C312 334 290 356 256 364 C222 356 200 334 190 308 C178 274 168 240 176 210 C186 174 220 160 256 160 Z" />
+      <!-- Muzzle & Ring -->
+      <ellipse cx="256" cy="336" rx="42" ry="28" fill="#4A0D16" stroke="url(#logoGold)" stroke-width="4"/>
+      <circle cx="240" cy="334" r="5" fill="url(#logoGold)"/>
+      <circle cx="272" cy="334" r="5" fill="url(#logoGold)"/>
+      <path d="M236 348 C236 366 244 380 256 380 C268 380 276 366 276 348" fill="none" stroke="url(#goldBrightLogo)" stroke-width="6" stroke-linecap="round"/>
+    </g>
+
+    <!-- Emblem Stars -->
+    <polygon points="70,18 72,23 78,23 73,26 75,32 70,28 65,32 67,26 62,23 68,23" fill="url(#goldBrightLogo)"/>
+    <text x="70" y="124" text-anchor="middle" font-family="'Cinzel', Georgia, serif" font-size="10" font-weight="800" letter-spacing="2.5" fill="url(#logoGold)">
+      EST. 2642
+    </text>
+  </g>
+
+  <!-- Right Typography Section -->
+  <g transform="translate(172, 0)">
+    <!-- Top Micro Tagline -->
+    <g transform="translate(0, 36)">
+      <line x1="0" y1="-4" x2="30" y2="-4" stroke="#C7903E" stroke-width="1.5" opacity="0.8"/>
+      <text x="38" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="3" fill="#7A1F2B" text-transform="uppercase">
+        AUSTRALIAN ARTISAN BUTCHER
+      </text>
+      <line x1="285" y1="-4" x2="315" y2="-4" stroke="#C7903E" stroke-width="1.5" opacity="0.8"/>
+    </g>
+
+    <!-- Main Title -->
+    <text x="0" y="86" font-family="'Cinzel', 'Playfair Display', Georgia, serif" font-size="44" font-weight="900" letter-spacing="1.5" fill="#151515">
+      BUY BEEF ONLINE
+    </text>
+
+    <!-- Subtitle / Location Badge Bar -->
+    <g transform="translate(0, 122)">
+      <!-- Green Cold Chain Pin -->
+      <circle cx="6" cy="-4" r="4" fill="#2E6B4D"/>
+      <text x="16" y="0" font-family="system-ui, -apple-system, monospace, sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="#65635F">
+        FARM DIRECT • NSW 2642 • NATIONWIDE COLD-CHAIN
+      </text>
+    </g>
+  </g>
+</svg>

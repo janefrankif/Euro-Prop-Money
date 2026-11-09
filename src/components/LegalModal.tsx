@@ -18,13 +18,9 @@ export const LegalModal: React.FC<LegalModalProps> = ({
   initialTab = 'terms',
   onOpenCompliance,
 }) => {
-  const [activeTab, setActiveTab] = useState<LegalTab>(initialTab);
-
-  React.useEffect(() => {
-    if (initialTab) {
-      setActiveTab(initialTab);
-    }
-  }, [initialTab]);
+  const [userTab, setUserTab] = useState<LegalTab | null>(null);
+  const activeTab = userTab ?? initialTab;
+  const setActiveTab = (tab: LegalTab) => setUserTab(tab);
 
   if (!isOpen) return null;
 
@@ -160,7 +156,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   Stralauer Allee 7, 10245 Berlin-Bezirk Friedrichshain-Kreuzberg, Germany
                 </p>
                 <p className="text-slate-500 text-[11px]">
-                  VAT ID: EU8392019482 · Hotline: +49 30 8492 1000 · PO Desk: dispatch@europropmoney.com
+                  VAT ID: EU8392019482 · Hotline: +49 30 8492 1000 · PO Desk: dispatch@europropmoney.de
                 </p>
               </div>
             </div>

@@ -1,14 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useSyncExternalStore } from 'react';
 import App from '../App';
 
-export default function AppWrapper() {
-  const [mounted, setMounted] = useState(false);
+function subscribe() {
+  return () => {};
+}
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+export default function AppWrapper() {
+  const mounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false
+  );
 
   if (!mounted) {
     return (

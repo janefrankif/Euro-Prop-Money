@@ -19,16 +19,37 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
     shootDate: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      onClose();
-    }, 2000);
+    setIsSubmitting(true);
+    try {
+      await fetch('/api/send-contact-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          production: form.production,
+          shootDate: form.shootDate,
+          message: form.message,
+          formType: 'quick_inquiry',
+        }),
+      });
+    } catch (err) {
+      console.warn('Quick inquiry email error:', err);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        onClose();
+      }, 2500);
+    }
   };
 
   return (
@@ -69,8 +90,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
             {/* Email */}
             <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-800 space-y-1">
               <span className="text-[10px] font-mono text-zinc-500 uppercase block">Studio PO Desk</span>
-              <a href="mailto:dispatch@europropmoney.com" className="text-xs font-mono font-bold text-white hover:text-amber-400 block transition-colors">
-                dispatch@europropmoney.com
+              <a href="mailto:dispatch@europropmoney.de" className="text-xs font-mono font-bold text-white hover:text-amber-400 block transition-colors">
+                dispatch@europropmoney.de
               </a>
               <span className="text-[10px] text-zinc-400">Response &lt; 20 mins</span>
             </div>
@@ -208,10 +229,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
               <button
                 type="submit"
-                className="w-full py-3 bg-amber-400 text-zinc-950 font-bold rounded-lg hover:bg-amber-300 transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md text-xs uppercase tracking-wider"
+                disabled={isSubmitting}
+                className="w-full py-3 bg-amber-400 text-zinc-950 font-bold rounded-lg hover:bg-amber-300 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md text-xs uppercase tracking-wider"
               >
-                <Send className="w-3.5 h-3.5" />
-                <span>Submit Production Studio Inquiry</span>
+                <Send className={`w-3.5 h-3.5 ${isSubmitting ? 'animate-pulse' : ''}`} />
+                <span>{isSubmitting ? 'Sending to Dispatch Desk...' : 'Submit Production Studio Inquiry'}</span>
               </button>
             </form>
           )}

@@ -27,7 +27,7 @@ export default function RootLayout({
     '@type': 'LocalBusiness',
     name: 'CINE EURO - Studio Grade Prop Money',
     telephone: '+49 30 8492 1000',
-    email: 'dispatch@europropmoney.com',
+    email: 'dispatch@europropmoney.de',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Stralauer Allee 7',

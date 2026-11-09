@@ -20,18 +20,14 @@ export const ShopPage: React.FC<ShopPageProps> = ({
   initialCategory = 'all',
   onNavigateHome,
 }) => {
-  const [selectedCoreCategory, setSelectedCoreCategory] = useState<string>(initialCategory);
+  const [userCoreCategory, setUserCoreCategory] = useState<string | null>(null);
+  const selectedCoreCategory = userCoreCategory ?? initialCategory;
+  const setSelectedCoreCategory = (cat: string) => setUserCoreCategory(cat);
   const [selectedQuickPill, setSelectedQuickPill] = useState<string>('all');
   const [selectedDenom, setSelectedDenom] = useState<string>('all');
   const [selectedPrint, setSelectedPrint] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'default' | 'price-asc' | 'price-desc' | 'bills'>('default');
-
-  React.useEffect(() => {
-    if (initialCategory) {
-      setSelectedCoreCategory(initialCategory);
-    }
-  }, [initialCategory]);
 
   // Quick filter pills: All, €5, €10, €20, €50, €100, €200, Bundles, Double-Sided, Aged
   const quickPills = [

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Printer, Copy, Check, FileText, ShieldCheck } from 'lucide-react';
+import { X, Printer, Copy, Check, FileText, ShieldCheck, Send } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 
 interface StudioQuoteModalProps {
@@ -12,6 +12,8 @@ interface StudioQuoteModalProps {
 export const StudioQuoteModal: React.FC<StudioQuoteModalProps> = ({ isOpen, onClose }) => {
   const { items, getSubtotal, getDiscount, getTotal } = useCartStore();
   const [copied, setCopied] = useState<boolean>(false);
+  const [isSubmittingPo, setIsSubmittingPo] = useState<boolean>(false);
+  const [poSent, setPoSent] = useState<boolean>(false);
 
   const [formData, setFormData] = useState({
     productionTitle: 'Apex Crimson (Motion Picture)',
@@ -19,7 +21,7 @@ export const StudioQuoteModal: React.FC<StudioQuoteModalProps> = ({ isOpen, onCl
     requesterName: 'Elena Rostova (Lead Prop Master)',
     email: 'props@apex-crimson-film.eu',
     callSheetDate: '2026-11-15',
-    poNumber: `PO-${Math.floor(10000 + Math.random() * 90000)}`,
+    poNumber: 'PO-84920',
   });
 
   const subtotal = getSubtotal();
@@ -49,6 +51,45 @@ Legal Status: European Central Bank ECB/2013/10 Section 2 Compliant
     navigator.clipboard.writeText(quoteText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleEmailQuote = async () => {
+    setIsSubmittingPo(true);
+    try {
+      await fetch('/api/send-contact-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.requesterName,
+          email: formData.email,
+          production: `${formData.productionTitle} (${formData.productionCompany})`,
+          shootDate: formData.callSheetDate,
+          role: 'Studio Buyer / Prop Master',
+          message: `Official Studio PO Requisition: ${formData.poNumber}\nProduction: ${formData.productionTitle}\nCompany: ${formData.productionCompany}\nCall Sheet Date: ${formData.callSheetDate}\nTotal: €${total.toFixed(2)}`,
+          formType: 'studio_quote',
+          quoteDetails: {
+            poNumber: formData.poNumber,
+            productionTitle: formData.productionTitle,
+            productionCompany: formData.productionCompany,
+            items: items.map((i) => ({
+              name: i.product.name,
+              quantity: i.quantity,
+              price: i.product.price,
+              finish: i.selectedFinish,
+              printType: i.selectedPrintType,
+            })),
+            subtotal,
+            total,
+          },
+        }),
+      });
+      setPoSent(true);
+      setTimeout(() => setPoSent(false), 3000);
+    } catch (err) {
+      console.warn('Failed to transmit PO email:', err);
+    } finally {
+      setIsSubmittingPo(false);
+    }
   };
 
   return (
@@ -206,6 +247,24 @@ Legal Status: European Central Bank ECB/2013/10 Section 2 Compliant
 
           {/* Action Row */}
           <div className="flex flex-col sm:flex-row gap-3 justify-end pt-2">
+            <button
+              onClick={handleEmailQuote}
+              disabled={isSubmittingPo || items.length === 0}
+              className="px-4 py-2.5 bg-slate-900 border border-slate-800 text-amber-400 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+            >
+              {poSent ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>PO Sent to Dispatch!</span>
+                </>
+              ) : (
+                <>
+                  <Send className={`w-3.5 h-3.5 ${isSubmittingPo ? 'animate-pulse' : ''}`} />
+                  <span>{isSubmittingPo ? 'Transmitting to Vault...' : 'Email PO to Dispatch'}</span>
+                </>
+              )}
+            </button>
+
             <button
               onClick={handleCopyQuote}
               className="px-4 py-2.5 bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs"

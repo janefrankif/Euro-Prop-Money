@@ -12,6 +12,7 @@ interface ContactPageProps {
 export const ContactPage: React.FC<ContactPageProps> = ({ onNavigateHome, onOpenCompliance }) => {
   const [isWhatsAppOnline, setIsWhatsAppOnline] = useState(true);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const [form, setForm] = useState({
@@ -24,9 +25,30 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigateHome, onOpen
     message: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      await fetch('/api/send-contact-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          role: form.role,
+          production: form.production,
+          shootDate: form.shootDate,
+          message: form.message,
+          formType: 'contact_page',
+        }),
+      });
+    } catch (err) {
+      console.warn('Contact email error:', err);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   const faqs = [
@@ -120,10 +142,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigateHome, onOpen
               <h3 className="text-lg font-bold text-slate-900 mb-1">Production Requisitions</h3>
               <p className="text-xs text-slate-600 mb-4">Send scripts, call sheets, and accounting purchase orders.</p>
               <a
-                href="mailto:dispatch@europropmoney.com"
+                href="mailto:dispatch@europropmoney.de"
                 className="text-base font-mono font-bold text-amber-600 hover:text-amber-700 transition-colors block"
               >
-                dispatch@europropmoney.com
+                dispatch@europropmoney.de
               </a>
             </div>
             <div className="pt-4 mt-6 border-t border-slate-200 text-[11px] text-slate-500">
@@ -303,10 +325,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigateHome, onOpen
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-amber-300 transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm active:scale-[0.99]"
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-amber-300 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm active:scale-[0.99]"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Submit Production Studio Inquiry</span>
+                  <Send className={`w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />
+                  <span>{isSubmitting ? 'Transmitting to Dispatch Desk...' : 'Submit Production Studio Inquiry'}</span>
                 </button>
               </form>
             )}

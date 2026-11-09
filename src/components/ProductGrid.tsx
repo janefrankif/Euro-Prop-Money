@@ -19,13 +19,12 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   activeCategory = 'all',
   onSelectCategory,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>(activeCategory);
-
-  React.useEffect(() => {
-    if (activeCategory) {
-      setSelectedCategory(activeCategory);
-    }
-  }, [activeCategory]);
+  const [userCategory, setUserCategory] = useState<string | null>(null);
+  const selectedCategory = userCategory ?? activeCategory;
+  const setSelectedCategory = (cat: string) => {
+    setUserCategory(cat);
+    onSelectCategory?.(cat);
+  };
   const [selectedDenom, setSelectedDenom] = useState<string>('all');
   const [selectedPrint, setSelectedPrint] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');

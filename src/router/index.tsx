@@ -48,13 +48,7 @@ export function parseCurrentLocation(): RouteState {
   const hash = window.location.hash;
 
   if ((!pathname || pathname === '/') && hash && hash.startsWith('#/')) {
-    const migrated = hash.replace('#/', '/');
-    try {
-      window.history.replaceState({}, '', migrated);
-      pathname = migrated;
-    } catch {
-      // Fallback
-    }
+    pathname = hash.replace('#/', '/');
   }
 
   // Normalize path: strip trailing slash except for root
@@ -158,9 +152,25 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [route, setRoute] = useState<RouteState>(() => parseCurrentLocation());
 
   useEffect(() => {
+    // Handle hash migration safely inside effect after mount
+    if (typeof window !== 'undefined' && window.location.hash?.startsWith('#/')) {
+      const migrated = window.location.hash.replace('#/', '/');
+      try {
+        window.history.replaceState({}, '', migrated);
+        const parsed = parseCurrentLocation();
+        React.startTransition(() => {
+          setRoute(parsed);
+        });
+      } catch {
+        // Fallback
+      }
+    }
+
     const handlePopState = () => {
       const parsed = parseCurrentLocation();
-      setRoute(parsed);
+      React.startTransition(() => {
+        setRoute(parsed);
+      });
       window.scrollTo({ top: 0, behavior: 'instant' });
     };
 
@@ -208,7 +218,7 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   }, [route]);
 
-  const navigate = (to: string, options?: { replace?: boolean; scroll?: boolean }) => {
+  const navigate = React.useCallback((to: string, options?: { replace?: boolean; scroll?: boolean }) => {
     let cleanTo = to.trim();
     if (!cleanTo.startsWith('/')) {
       cleanTo = `/${cleanTo}`;
@@ -221,24 +231,26 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
 
     const updated = parseCurrentLocation();
-    setRoute(updated);
+    React.startTransition(() => {
+      setRoute(updated);
+    });
 
     if (options?.scroll !== false) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
-  };
+  }, []);
 
-  const navigateToProduct = (product: Product) => {
+  const navigateToProduct = React.useCallback((product: Product) => {
     navigate(`/products/${product.slug || product.id}`);
-  };
+  }, [navigate]);
 
-  const navigateToCategory = (category: string) => {
+  const navigateToCategory = React.useCallback((category: string) => {
     if (category === 'all' || !category) {
       navigate('/shop');
     } else {
       navigate(`/shop?category=${encodeURIComponent(category)}`);
     }
-  };
+  }, [navigate]);
 
   const value = useMemo(
     () => ({
@@ -247,7 +259,7 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       navigateToProduct,
       navigateToCategory,
     }),
-    [route]
+    [route, navigate, navigateToProduct, navigateToCategory]
   );
 
   return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
