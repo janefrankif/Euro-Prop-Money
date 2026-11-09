@@ -75,10 +75,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     setTimeout(() => setCopiedText(null), 2500);
   };
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
+  const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (subtotal < 150.00) {
-      alert(`Minimum order requirement is €150.00. Please add €{(150.00 - subtotal).toFixed(2)} more in items before placing your order.`);
+      alert(`Minimum order requirement is €150.00. Please add €${(150.00 - subtotal).toFixed(2)} more in items before placing your order.`);
       return;
     }
     if (!termsAccepted) {
@@ -87,21 +87,62 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      const generatedId = `CE-${Math.floor(10000 + Math.random() * 90000)}`;
-      const now = new Date();
-      const formattedDate = now.toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      });
+    const now = new Date();
+    const generatedId = `CE-${(now.getTime() % 90000) + 10000}`;
+    const formattedDate = now.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
 
+    const payload = {
+      orderId: generatedId,
+      orderDate: formattedDate,
+      customerName: `${formData.firstName} ${formData.lastName}`.trim(),
+      recipientName: `${formData.firstName} ${formData.lastName}`.trim(),
+      customerEmail: formData.email,
+      recipientEmail: formData.email,
+      phone: formData.phone,
+      companyName: formData.companyName,
+      streetAddress: formData.streetAddress,
+      apartment: formData.apartment,
+      city: formData.city,
+      state: formData.state,
+      postcode: formData.postcode,
+      country: formData.country,
+      paymentMethod,
+      shippingMethod,
+      shippingCost,
+      subtotal,
+      total: grandTotal,
+      totalPayable: grandTotal,
+      orderItems: items.map((item) => ({
+        id: item.product.id,
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.quantity,
+        finish: item.selectedFinish,
+        printType: item.selectedPrintType,
+        total: item.product.price * item.quantity,
+      })),
+      orderNotes: formData.orderNotes,
+    };
+
+    try {
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      console.warn('Failed to send order email:', err);
+    } finally {
       setOrderId(generatedId);
       setOrderDate(formattedDate);
       setIsSubmitting(false);
       setOrderConfirmed(true);
       clearCart();
-    }, 1200);
+    }
   };
 
   return (
