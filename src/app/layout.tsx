@@ -17,6 +17,26 @@ export const metadata: Metadata = {
     description:
       'Cinema-grade, legally compliant Euro prop currency bundles, stacks, and production bags for film studios, directors, and content creators.',
     type: 'website',
+    images: [
+      {
+        url: '/hero_cover_hd.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'prop money euro',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CINE EURO - Studio Grade Prop Money',
+    description:
+      'Cinema-grade, legally compliant Euro prop currency bundles, stacks, and production bags for film studios, directors, and content creators.',
+    images: [
+      {
+        url: '/hero_cover_hd.jpg',
+        alt: 'prop money euro',
+      },
+    ],
   },
 };
 

@@ -59,7 +59,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* 1. Full-Cover Hero Background Image via Next.js-style <Image> with fill & priority */}
       <Image
         src={heroCoverLocalSrc || NEW_HERO_IMAGE_URL}
-        alt="Euro 500 prop money stack on cinematic marble surface - Full Cover Hero"
+        alt="prop money euro"
         fill
         priority={true}
         className="object-cover object-center"
