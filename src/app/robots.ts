@@ -5,7 +5,16 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/'],
+      disallow: [
+        '/api/',
+        '/*?*sort=*',
+        '/*?*price=*',
+        '/*?*min=*',
+        '/*?*max=*',
+        '/*?*order=*',
+        '/*?*page=*',
+        '/*?*filter=*',
+      ],
     },
     sitemap: 'https://europropmoney.de/sitemap.xml',
   };

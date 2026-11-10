@@ -136,8 +136,61 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     searchQuery !== '' ||
     sortBy !== 'default';
 
+  const shopBreadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://europropmoney.de/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Shop',
+        item: 'https://europropmoney.de/shop',
+      },
+    ],
+  };
+
+  const shopItemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Euro Prop Money Banknotes Catalog',
+    description: 'ECB 2013/10 certified prop banknotes for movie sets, music videos, and film productions.',
+    numberOfItems: PRODUCTS.length,
+    itemListElement: PRODUCTS.map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        name: product.name,
+        url: `https://europropmoney.de/products/${product.slug || product.id}`,
+        image: product.image,
+        offers: {
+          '@type': 'Offer',
+          priceCurrency: 'EUR',
+          price: product.price.toFixed(2),
+          availability: 'https://schema.org/InStock',
+        },
+      },
+    })),
+  };
+
   return (
     <div className="w-full bg-white min-h-screen py-10 lg:py-16 text-slate-900">
+      <script
+        id="shop-breadcrumb-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(shopBreadcrumbJsonLd) }}
+      />
+      <script
+        id="shop-itemlist-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(shopItemListJsonLd) }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* WooCommerce Breadcrumbs */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-slate-500 mb-6">
@@ -188,12 +241,12 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               placeholder="Search props, face values, cases..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-50 border border-slate-300 rounded-lg pl-10 pr-9 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:bg-white transition-all font-sans shadow-2xs"
+              className="w-full min-h-[48px] sm:min-h-[42px] bg-slate-50 border border-slate-300 rounded-lg pl-10 pr-9 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:bg-white transition-all font-sans shadow-2xs"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+                className="absolute right-3 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-slate-400 hover:text-slate-700"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -211,7 +264,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
               <button
                 key={pill.id}
                 onClick={() => handleQuickPill(pill.id)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border ${
+                className={`min-h-[40px] px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border flex items-center justify-center ${
                   selectedQuickPill === pill.id
                     ? 'bg-amber-400 text-slate-950 border-amber-400 shadow-xs'
                     : 'bg-slate-100 text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-200/70'

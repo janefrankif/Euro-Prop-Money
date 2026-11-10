@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { HeroSection } from '../components/HeroSection';
 import { CategoryShowcase } from '../components/CategoryShowcase';
 import { ProductCard } from '../components/ProductCard';
@@ -162,12 +163,15 @@ export const HomePage: React.FC<HomePageProps> = ({
               >
                 {post.image && (
                   <div className="relative w-full h-36 overflow-hidden bg-slate-950">
-                    <img
+                    <Image
                       src={post.image}
                       alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      referrerPolicy="no-referrer"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-2.5 left-3">
                       <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-400 text-slate-950 px-2 py-0.5 rounded">
                         {post.category}

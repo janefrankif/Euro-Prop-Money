@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState, useMemo } from '
 import { Product } from '../types';
 import { PRODUCTS } from '../data/products';
 import { BLOG_POSTS, BlogPost } from '../data/blog';
+import { resolveKeywordQuery, KeywordTarget } from '../data/keywordMapping';
 
 export type PageView = 'home' | 'shop' | 'product' | 'about' | 'contact' | 'blog' | 'compliance' | '404';
 
@@ -13,6 +14,8 @@ export interface RouteState {
   category?: string;
   product?: Product;
   blogPost?: BlogPost;
+  keywordTarget?: KeywordTarget;
+  searchQuery?: string;
 }
 
 export function findProduct(param: string): Product | undefined {
@@ -37,19 +40,13 @@ export function findBlogPost(param: string): BlogPost | undefined {
   );
 }
 
-export function parseCurrentLocation(): RouteState {
-  if (typeof window === 'undefined') {
-    return { view: 'home', path: '/' };
-  }
+export function parsePath(fullPath: string): RouteState {
+  if (!fullPath) return { view: 'home', path: '/' };
 
-  // Support legacy hash migration if user bookmarked #/product/... or #/about
-  let pathname = window.location.pathname;
-  const search = window.location.search;
-  const hash = window.location.hash;
-
-  if ((!pathname || pathname === '/') && hash && hash.startsWith('#/')) {
-    pathname = hash.replace('#/', '/');
-  }
+  // Separate pathname and search
+  const [pathnamePart, searchPart] = fullPath.split('?');
+  const pathname = pathnamePart || '/';
+  const search = searchPart ? `?${searchPart}` : '';
 
   // Normalize path: strip trailing slash except for root
   const cleanPath = pathname.length > 1 && pathname.endsWith('/') 
@@ -57,6 +54,39 @@ export function parseCurrentLocation(): RouteState {
     : pathname || '/';
 
   const searchParams = new URLSearchParams(search);
+  const rawSearchQuery = searchParams.get('q') || searchParams.get('s') || searchParams.get('search') || searchParams.get('keyword') || searchParams.get('query') || '';
+
+  // Check if incoming query matches mapped search influx terms
+  if (rawSearchQuery) {
+    const keywordMatch = resolveKeywordQuery(rawSearchQuery);
+    if (keywordMatch) {
+      if (keywordMatch.productId) {
+        const prod = PRODUCTS.find((p) => p.id === keywordMatch.productId);
+        if (prod) {
+          return {
+            view: 'product',
+            path: `/products/${prod.slug}`,
+            product: prod,
+            keywordTarget: keywordMatch,
+            searchQuery: rawSearchQuery,
+          };
+        }
+      }
+      return {
+        view: keywordMatch.targetView,
+        path: cleanPath,
+        category: keywordMatch.categoryFilter || 'all',
+        keywordTarget: keywordMatch,
+        searchQuery: rawSearchQuery,
+      };
+    }
+    return {
+      view: 'shop',
+      path: '/shop',
+      category: 'all',
+      searchQuery: rawSearchQuery,
+    };
+  }
 
   // 1. Root / Home
   if (cleanPath === '' || cleanPath === '/' || cleanPath === '/home') {
@@ -89,7 +119,6 @@ export function parseCurrentLocation(): RouteState {
         product 
       };
     }
-    // If not found, fallback to shop with warning or 404
     return { view: '404', path: cleanPath };
   }
 
@@ -132,6 +161,22 @@ export function parseCurrentLocation(): RouteState {
   return { view: '404', path: cleanPath };
 }
 
+export function parseCurrentLocation(initialPath?: string): RouteState {
+  if (typeof window === 'undefined') {
+    return parsePath(initialPath || '/');
+  }
+
+  let pathname = window.location.pathname;
+  const search = window.location.search;
+  const hash = window.location.hash;
+
+  if ((!pathname || pathname === '/') && hash && hash.startsWith('#/')) {
+    pathname = hash.replace('#/', '/');
+  }
+
+  return parsePath((pathname || '/') + (search || ''));
+}
+
 interface RouterContextType {
   route: RouteState;
   navigate: (to: string, options?: { replace?: boolean; scroll?: boolean }) => void;
@@ -148,8 +193,12 @@ const defaultRouterValue: RouterContextType = {
 
 const RouterContext = createContext<RouterContextType>(defaultRouterValue);
 
-export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [route, setRoute] = useState<RouteState>(() => parseCurrentLocation());
+export const RouterProvider: React.FC<{ children: React.ReactNode; initialPath?: string }> = ({ 
+  children,
+  initialPath = '/'
+}) => {
+  // Use initialPath for state initialization so SSR and initial client hydration match EXACTLY
+  const [route, setRoute] = useState<RouteState>(() => parsePath(initialPath));
 
   useEffect(() => {
     // Handle hash migration safely inside effect after mount
@@ -180,9 +229,18 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   // Synchronize document title and meta description dynamically for indexability and SEO
   useEffect(() => {
+    if (route.keywordTarget) {
+      document.title = `${route.keywordTarget.metaTitle} | Euro Prop Money EU`;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', route.keywordTarget.metaDescription);
+      }
+      return;
+    }
+
     switch (route.view) {
       case 'home':
-        document.title = 'Euro Prop Money - Realistic Film & AI Studio Props';
+        document.title = 'Prop Money Euro | Realistic Film & TV Studio Banknotes EU';
         break;
       case 'shop':
         if (route.category && route.category !== 'all') {
@@ -210,7 +268,7 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         }
         break;
       case 'compliance':
-        document.title = 'European Central Bank Decision 2013/10 Compliance | Euro Prop Money EU';
+        document.title = 'European Central Bank Decision 2013/10 Legal Safe Harbor | Euro Prop Money EU';
         break;
       case '404':
         document.title = 'Page Not Found | Euro Prop Money EU';

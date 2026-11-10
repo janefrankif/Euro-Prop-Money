@@ -181,14 +181,14 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
           <div>
-            &copy; {new Date().getFullYear()} Euro Prop Money EU. Registered European Motion Picture Supplier · Stralauer Allee 7, 10245 Berlin-Bezirk Friedrichshain-Kreuzberg.
+            &copy; 2026 Euro Prop Money EU. Registered European Motion Picture Supplier · Stralauer Allee 7, 10245 Berlin-Bezirk Friedrichshain-Kreuzberg.
           </div>
 
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             <button
               type="button"
               onClick={() => onOpenLegal ? onOpenLegal('terms') : onNavigate('compliance')}
-              className="hover:text-slate-900 transition-colors cursor-pointer"
+              className="py-1.5 px-2 hover:text-slate-900 transition-colors cursor-pointer"
             >
               Terms
             </button>
@@ -196,7 +196,7 @@ export const Footer: React.FC<FooterProps> = ({
             <button
               type="button"
               onClick={() => onOpenLegal ? onOpenLegal('privacy') : onNavigate('compliance')}
-              className="hover:text-slate-900 transition-colors cursor-pointer"
+              className="py-1.5 px-2 hover:text-slate-900 transition-colors cursor-pointer"
             >
               Privacy
             </button>
@@ -204,14 +204,14 @@ export const Footer: React.FC<FooterProps> = ({
             <button
               type="button"
               onClick={() => onOpenLegal ? onOpenLegal('refund') : onNavigate('compliance')}
-              className="hover:text-slate-900 transition-colors cursor-pointer"
+              className="py-1.5 px-2 hover:text-slate-900 transition-colors cursor-pointer"
             >
               Refunds
             </button>
             <span aria-hidden="true">·</span>
             <Link
               to="/compliance"
-              className="hover:text-slate-900 transition-colors cursor-pointer"
+              className="py-1.5 px-2 hover:text-slate-900 transition-colors cursor-pointer"
             >
               ECB Legal Compliance
             </Link>
@@ -219,7 +219,7 @@ export const Footer: React.FC<FooterProps> = ({
             <button
               type="button"
               onClick={onScrollToTop}
-              className="flex items-center gap-1 hover:text-slate-900 transition-colors cursor-pointer ml-1"
+              className="py-1.5 px-2 flex items-center gap-1 hover:text-slate-900 transition-colors cursor-pointer ml-1"
             >
               <span>Back to Top</span>
               <ArrowUp className="w-3 h-3" />

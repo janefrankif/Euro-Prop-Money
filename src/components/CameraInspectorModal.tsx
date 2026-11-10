@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { X, Sun, Lamp, ZoomIn, ZoomOut, ShieldCheck, Check, ShoppingBag, Eye, RefreshCw } from 'lucide-react';
 import { Product, PrintType, FinishType } from '../types';
 import { useCartStore } from '../store/useCartStore';
@@ -117,11 +118,13 @@ export const CameraInspectorModal: React.FC<CameraInspectorModalProps> = ({ prod
                   : 'bg-black'
               }`}
             >
-              <img
+              <Image
                 src={product.image}
                 alt={`${product.name} camera test`}
+                fill
+                sizes="(max-width: 1024px) 100vw, 600px"
                 referrerPolicy="no-referrer"
-                className={`w-full h-full object-cover transition-all duration-500 ease-out ${
+                className={`object-cover transition-all duration-500 ease-out ${
                   isZoomed ? 'scale-150' : 'scale-100'
                 } ${lighting === 'tungsten' ? 'sepia-[0.35] brightness-95' : 'brightness-100'}`}
               />

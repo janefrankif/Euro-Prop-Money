@@ -73,14 +73,14 @@ export const TrustpilotReviews: React.FC = () => {
               <button
                 onClick={handlePrev}
                 aria-label="Previous review"
-                className="p-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 hover:text-slate-950 transition-all cursor-pointer shadow-2xs active:scale-95"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 hover:text-slate-950 transition-all cursor-pointer shadow-2xs active:scale-95"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={handleNext}
                 aria-label="Next review"
-                className="p-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 hover:text-slate-950 transition-all cursor-pointer shadow-2xs active:scale-95"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 hover:text-slate-950 transition-all cursor-pointer shadow-2xs active:scale-95"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

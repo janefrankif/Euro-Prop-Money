@@ -5,6 +5,8 @@ import { Home, Layers, Info, ShoppingBag } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { Link } from '../router';
 
+import { useIsMounted } from '../hooks/useIsMounted';
+
 interface MobileBottomNavProps {
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -15,44 +17,45 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   currentPage,
 }) => {
   const { getItemCount, setIsOpen } = useCartStore();
-  const itemCount = getItemCount();
+  const mounted = useIsMounted();
+  const itemCount = mounted ? getItemCount() : 0;
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-200 pb-safe shadow-lg">
-      <nav className="flex items-center justify-around h-14 max-w-lg mx-auto px-2">
+      <nav className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
         {/* Home */}
         <Link
           to="/"
-          className={`flex flex-col items-center justify-center flex-1 h-full transition-colors cursor-pointer active:scale-95 ${
+          className={`flex flex-col items-center justify-center flex-1 min-h-[48px] min-w-[48px] py-1 transition-colors cursor-pointer active:scale-95 ${
             currentPage === 'home' ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
           aria-label="Home"
         >
-          <Home className="w-4 h-4 mb-0.5" />
+          <Home className="w-5 h-5 mb-0.5" />
           <span className="text-[10px] font-semibold tracking-wider uppercase">HOME</span>
         </Link>
 
         {/* Shop */}
         <Link
           to="/shop"
-          className={`flex flex-col items-center justify-center flex-1 h-full transition-colors cursor-pointer active:scale-95 ${
+          className={`flex flex-col items-center justify-center flex-1 min-h-[48px] min-w-[48px] py-1 transition-colors cursor-pointer active:scale-95 ${
             currentPage === 'shop' ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
           aria-label="Shop"
         >
-          <Layers className="w-4 h-4 mb-0.5" />
+          <Layers className="w-5 h-5 mb-0.5" />
           <span className="text-[10px] font-semibold tracking-wider uppercase">SHOP</span>
         </Link>
 
         {/* About */}
         <Link
           to="/about"
-          className={`flex flex-col items-center justify-center flex-1 h-full transition-colors cursor-pointer active:scale-95 ${
+          className={`flex flex-col items-center justify-center flex-1 min-h-[48px] min-w-[48px] py-1 transition-colors cursor-pointer active:scale-95 ${
             currentPage === 'about' ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
           aria-label="About Us"
         >
-          <Info className="w-4 h-4 mb-0.5" />
+          <Info className="w-5 h-5 mb-0.5" />
           <span className="text-[10px] font-semibold tracking-wider uppercase">ABOUT</span>
         </Link>
 
@@ -60,13 +63,13 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="flex flex-col items-center justify-center flex-1 h-full text-slate-500 hover:text-slate-900 transition-colors cursor-pointer relative active:scale-95"
+          className="flex flex-col items-center justify-center flex-1 min-h-[48px] min-w-[48px] py-1 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer relative active:scale-95"
           aria-label="Shopping Cart"
         >
           <div className="relative">
-            <ShoppingBag className="w-4 h-4 mb-0.5" />
+            <ShoppingBag className="w-5 h-5 mb-0.5" />
             {itemCount > 0 && (
-              <span className="absolute -top-1.5 -right-2 bg-amber-400 text-slate-950 text-[9px] font-mono font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
+              <span className="absolute -top-1.5 -right-2 bg-amber-400 text-slate-950 text-[9px] font-mono font-bold w-4 h-4 rounded-full flex items-center justify-center">
                 {itemCount}
               </span>
             )}

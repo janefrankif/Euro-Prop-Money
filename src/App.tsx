@@ -5,13 +5,31 @@ import { RouterProvider, useRouter } from './router';
 import { AnnouncementBar } from './components/AnnouncementBar';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { CartDrawer } from './components/CartDrawer';
-import { CameraInspectorModal } from './components/CameraInspectorModal';
-import { CheckoutModal } from './components/CheckoutModal';
-import { StudioQuoteModal } from './components/StudioQuoteModal';
-import { BlogModal } from './components/BlogModal';
-import { LegalModal, LegalTab } from './components/LegalModal';
+import dynamic from 'next/dynamic';
+import type { LegalTab } from './components/LegalModal';
 import { MobileBottomNav } from './components/MobileBottomNav';
+
+// Code-split heavy interactive modals & drawer (ssr: false for client-only interactivity)
+const CartDrawer = dynamic(() => import('./components/CartDrawer').then((m) => m.CartDrawer), {
+  ssr: false,
+});
+const CameraInspectorModal = dynamic(
+  () => import('./components/CameraInspectorModal').then((m) => m.CameraInspectorModal),
+  { ssr: false }
+);
+const CheckoutModal = dynamic(() => import('./components/CheckoutModal').then((m) => m.CheckoutModal), {
+  ssr: false,
+});
+const StudioQuoteModal = dynamic(
+  () => import('./components/StudioQuoteModal').then((m) => m.StudioQuoteModal),
+  { ssr: false }
+);
+const BlogModal = dynamic(() => import('./components/BlogModal').then((m) => m.BlogModal), {
+  ssr: false,
+});
+const LegalModal = dynamic(() => import('./components/LegalModal').then((m) => m.LegalModal), {
+  ssr: false,
+});
 
 // Distinct WooCommerce Views
 import { HomePage } from './views/HomePage';
@@ -73,7 +91,7 @@ function AppContent() {
   const activeHeaderPage = route.view === '404' ? '' : route.view;
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-amber-400 selection:text-slate-900">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-amber-400 selection:text-slate-900 overflow-x-hidden w-full relative">
       {/* Top Automated Announcement Marquee */}
       <AnnouncementBar />
 
@@ -227,9 +245,9 @@ function AppContent() {
   );
 }
 
-export default function App() {
+export default function App({ initialPath = '/' }: { initialPath?: string }) {
   return (
-    <RouterProvider>
+    <RouterProvider initialPath={initialPath}>
       <AppContent />
     </RouterProvider>
   );

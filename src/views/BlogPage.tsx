@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { BookOpen, Clock, Calendar, ArrowRight, Tag, ShieldCheck } from 'lucide-react';
 import { BLOG_POSTS, BlogPost } from '../data/blog';
 import { Link } from '../router';
@@ -19,8 +20,57 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigateHome, onReadPost }
     ? BLOG_POSTS
     : BLOG_POSTS.filter((p) => p.category === selectedCategory);
 
+  const blogJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'Euro Prop Money Film & TV Knowledge Base',
+    description: 'Expert guides for prop masters and line producers on ECB legal compliance, camera optics, and production logistics.',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Euro Prop Money EU',
+      logo: 'https://europropmoney.de/hero_cover_hd.jpg',
+    },
+    blogPost: BLOG_POSTS.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.summary,
+      datePublished: post.date,
+      image: post.image,
+      url: `https://europropmoney.de/blog/${post.slug || post.id}`,
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://europropmoney.de/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://europropmoney.de/blog',
+      },
+    ],
+  };
+
   return (
     <div className="w-full bg-white min-h-screen py-10 lg:py-16 text-slate-900">
+      <script
+        id="blog-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
+      />
+      <script
+        id="blog-breadcrumb-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6">
@@ -78,8 +128,15 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigateHome, onReadPost }
               <div>
                 {post.image && (
                   <div className="relative w-full h-44 sm:h-48 overflow-hidden bg-slate-950">
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      referrerPolicy="no-referrer"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-3 left-3">
                       <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-400 text-slate-950 px-2 py-0.5 rounded">
                         {post.category}

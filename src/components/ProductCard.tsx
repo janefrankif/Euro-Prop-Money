@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { ShoppingBag, Eye, Check, ShieldCheck } from 'lucide-react';
 import { Product } from '../types';
 import { useCartStore } from '../store/useCartStore';
@@ -49,50 +50,53 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <article className="group relative flex flex-col justify-between rounded-xl bg-white border border-slate-200 hover:border-amber-400 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden hover:-translate-y-0.5">
       {/* Product Image Slot with shareable link */}
-      <Link 
-        to={productUrl}
-        onClick={handleOpenProduct}
-        className="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden cursor-pointer block"
-      >
-        {!imageError ? (
-          <img
-            src={product.image}
-            alt={product.name}
-            referrerPolicy="no-referrer"
-            onError={() => setImageError(true)}
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-400 p-4 text-center">
-            <ShieldCheck className="w-8 h-8 text-amber-500/70 mb-2" />
-            <span className="text-xs font-mono font-medium text-slate-700">
-              {product.name}
+      <div className="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden cursor-pointer block">
+        <Link 
+          to={productUrl}
+          onClick={handleOpenProduct}
+          className="w-full h-full block"
+        >
+          {!imageError ? (
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              referrerPolicy="no-referrer"
+              onError={() => setImageError(true)}
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-400 p-4 text-center">
+              <ShieldCheck className="w-8 h-8 text-amber-500/70 mb-2" />
+              <span className="text-xs font-mono font-medium text-slate-700">
+                {product.name}
+              </span>
+              <span className="text-[11px] text-slate-500">Matte Prop Currency Specimen</span>
+            </div>
+          )}
+
+          {/* Ambient subtle vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent pointer-events-none" />
+
+          {/* Studio Tag */}
+          {product.tag && (
+            <div className="absolute top-3 left-3 z-10 pointer-events-none">
+              <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-amber-800 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded border border-slate-200 shadow-xs">
+                {product.tag}
+              </span>
+            </div>
+          )}
+
+          {/* Face Value Visual Tag */}
+          <div className="absolute bottom-3 left-3 z-10 pointer-events-none">
+            <span className="text-xs font-mono font-bold text-slate-900 bg-white/90 backdrop-blur-md px-2 py-1 rounded border border-slate-200 shadow-xs">
+              {product.faceValue}
             </span>
-            <span className="text-[11px] text-slate-500">Matte Prop Currency Specimen</span>
           </div>
-        )}
+        </Link>
 
-        {/* Ambient subtle vignette */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent pointer-events-none" />
-
-        {/* Studio Tag */}
-        {product.tag && (
-          <div className="absolute top-3 left-3 z-10 pointer-events-none">
-            <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-amber-800 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded border border-slate-200 shadow-xs">
-              {product.tag}
-            </span>
-          </div>
-        )}
-
-        {/* Face Value Visual Tag */}
-        <div className="absolute bottom-3 left-3 z-10 pointer-events-none">
-          <span className="text-xs font-mono font-bold text-slate-900 bg-white/90 backdrop-blur-md px-2 py-1 rounded border border-slate-200 shadow-xs">
-            {product.faceValue}
-          </span>
-        </div>
-
-        {/* Quick Camera Inspection Overlay Button */}
+        {/* Quick Camera Inspection Overlay Button - outside Link to ensure valid HTML */}
         <button
           type="button"
           onClick={(e) => {
@@ -105,7 +109,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         >
           <Eye className="w-4 h-4" />
         </button>
-      </Link>
+      </div>
 
       {/* Card Content & Metadata */}
       <div className="flex flex-col flex-1 p-5">
@@ -150,7 +154,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               onClick={handleQuickAdd}
               disabled={addedAnimation}
               aria-label={`Add ${product.name} to cart`}
-              className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg transition-all cursor-pointer whitespace-nowrap shadow-xs ${
+              className={`flex items-center min-h-[44px] gap-1.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-lg transition-all cursor-pointer whitespace-nowrap shadow-xs ${
                 addedAnimation
                   ? 'bg-emerald-600 text-white'
                   : 'bg-slate-900 text-white hover:bg-amber-400 hover:text-slate-950 active:scale-95'

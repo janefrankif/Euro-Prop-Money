@@ -1,0 +1,638 @@
+export interface KeywordTarget {
+  keyword: string;
+  normalized: string;
+  targetView: 'home' | 'shop' | 'product' | 'compliance' | 'blog' | 'contact';
+  categoryFilter?: string;
+  denomFilter?: string;
+  productId?: string;
+  blogSlug?: string;
+  metaTitle: string;
+  metaDescription: string;
+  intentCategory: 'buying' | 'denominations' | 'legal' | 'quality' | 'bundles' | 'comparison' | 'general';
+}
+
+export const MAIN_KEYWORD = 'prop money euro';
+
+export const KEYWORD_MAP: KeywordTarget[] = [
+  // --- MAIN KEYWORD ---
+  {
+    keyword: 'prop money euro',
+    normalized: 'prop money euro',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro | Cinema & Film Prop Banknote Stacks',
+    metaDescription: 'Buy realistic prop money euro notes certified under ECB Decision 2013/10. High-definition 8K non-reflective prop banknote stacks for movie and TV sets.',
+    intentCategory: 'buying',
+  },
+
+  // --- GERMAN HIGH INTENT (BUYING & KAUFEN) ---
+  {
+    keyword: 'prop money euro kaufen',
+    normalized: 'prop money euro kaufen',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro Kaufen | Film & Requisiten Geld Online Shop',
+    metaDescription: 'Jetzt professionelles Prop Money Euro kaufen. ECB 2013/10 konforme Film-Euroscheine für Filmproduktionen, Musikvideos und TV-Requisiten in Deutschland.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'fake money euro kaufen',
+    normalized: 'fake money euro kaufen',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Fake Money Euro Kaufen | Legales Requisitengeld für Film & TV',
+    metaDescription: 'Legales Fake Money Euro kaufen. Hochauflösende 8K-Kamera-konforme Requisitenbanknoten mit gesetzlichem Safe-Harbor-Aufdruck für Filmsets.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'buy fake money euro realistic',
+    normalized: 'buy fake money euro realistic',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Buy Realistic Fake Money Euro | Cinema Grade Prop Bills',
+    metaDescription: 'Buy highly realistic fake money euro notes. ECB 2013/10 certified prop banknotes for movie sets, music videos, and TV shows.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'euro prop money buy',
+    normalized: 'euro prop money buy',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Buy Euro Prop Money | Official Film Studio Prop Supplier',
+    metaDescription: 'Order premium euro prop money online. Fast European 24h courier dispatch to Berlin, Paris, and London soundstage locations.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'buy prop money euro',
+    normalized: 'buy prop money euro',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Buy Prop Money Euro | Premium Banknote Stacks Online',
+    metaDescription: 'Order realistic prop money euro stacks with non-reflective matte finish. Perfect for close-up camera angles and high-intensity lighting.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'buy prop money online',
+    normalized: 'buy prop money online',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Buy Prop Money Online | EU Film Banknote Store',
+    metaDescription: 'Buy legal prop money online. Standard 100-bill banded stacks, heist bags, and director suitcases for motion picture productions.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'buy fake money online',
+    normalized: 'buy fake money online',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Buy Fake Money Online | Legally Compliant Movie Props',
+    metaDescription: 'Order legal film fake money online. Certified disproportionate scale and matte cellulose paper for seamless digital cinematography.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'buy play money',
+    normalized: 'buy play money',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Buy Play Money & Film Props | Euro Prop Money EU',
+    metaDescription: 'Buy play money and camera-calibrated Euro prop currency bundles for studio productions and creative projects.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'prop money euro shop',
+    normalized: 'prop money euro shop',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro Shop | European Studio Prop Supply',
+    metaDescription: 'Official Euro Prop Money Shop. Certified European Central Bank compliant prop banknotes with fast soundstage delivery.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'euro prop money for sale',
+    normalized: 'euro prop money for sale',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Euro Prop Money for Sale | Studio Grade Banknote Bundles',
+    metaDescription: 'Realistic Euro prop money for sale. Single stacks, mixed director packs, and tactical heist bags available for instant order.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'prop money euro for sale',
+    normalized: 'prop money euro for sale',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro for Sale | Authentic European Film Money',
+    metaDescription: 'Camera-calibrated prop money euro notes for sale with non-glare coating and clear legal movie markings.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'prop money euro realistic for sale',
+    normalized: 'prop money euro realistic for sale',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Realistic Prop Money Euro for Sale | 8K Cinema Calibrated',
+    metaDescription: 'Ultra-realistic prop money euro notes for sale. Tested under ARRI ALEXA 35 and RED V-Raptor 8K cameras.',
+    intentCategory: 'buying',
+  },
+
+  // --- DENOMINATIONS & SPECIFIC BANKNOTES ---
+  {
+    keyword: '5 euro prop money',
+    normalized: '5 euro prop money',
+    targetView: 'product',
+    productId: 'euro-5-stack',
+    metaTitle: 'Buy €5 Euro Prop Money Stack | Classical Archway Design',
+    metaDescription: 'Order €5 Euro prop money stack (100 notes). Features classical archways and grey-toned architectural engraving with legal safe harbor markings.',
+    intentCategory: 'denominations',
+  },
+  {
+    keyword: 'fake money 5 euro',
+    normalized: 'fake money 5 euro',
+    targetView: 'product',
+    productId: 'euro-5-stack',
+    metaTitle: 'Fake Money 5 Euro Stack | Legally Compliant Film Props',
+    metaDescription: 'Buy 5 Euro fake money stack for film and cash register dressing. ECB 2013/10 safe harbor compliant.',
+    intentCategory: 'denominations',
+  },
+  {
+    keyword: '10 euro prop money',
+    normalized: '10 euro prop money',
+    targetView: 'product',
+    productId: 'euro-10-stack',
+    metaTitle: 'Buy €10 Euro Prop Money Stack | Romanesque Red Notes',
+    metaDescription: 'Order €10 Euro prop money stack (100 notes). Romanesque red architectural detailing with clear "FOR MOTION PICTURE USE ONLY" imprint.',
+    intentCategory: 'denominations',
+  },
+  {
+    keyword: '20 euro prop money',
+    normalized: '20 euro prop money',
+    targetView: 'product',
+    productId: 'euro-20-stack',
+    metaTitle: 'Buy €20 Euro Prop Money Stack | Gothic Blue Notes',
+    metaDescription: 'Order €20 Euro prop money stack (100 notes). High-contrast Gothic blue design engineered for high-speed camera playback.',
+    intentCategory: 'denominations',
+  },
+  {
+    keyword: '50 euro prop money',
+    normalized: '50 euro prop money',
+    targetView: 'product',
+    productId: 'euro-50-stack',
+    metaTitle: 'Buy €50 Euro Prop Money Stack | Most Filmed European Note',
+    metaDescription: 'Order €50 Euro prop money stack (100 notes). Renaissance orange banknote stack, the #1 requested denomination in European cinema.',
+    intentCategory: 'denominations',
+  },
+  {
+    keyword: '100 euro prop money',
+    normalized: '100 euro prop money',
+    targetView: 'product',
+    productId: 'euro-100-stack',
+    metaTitle: 'Buy €100 Euro Prop Money Stack | Baroque Green Notes',
+    metaDescription: 'Order €100 Euro prop money stack (100 notes). Premium Baroque green architecture with optical safe harbor watermark patterns.',
+    intentCategory: 'denominations',
+  },
+  {
+    keyword: '200 euro prop money',
+    normalized: '200 euro prop money',
+    targetView: 'product',
+    productId: 'euro-200-stack',
+    metaTitle: 'Buy €200 Euro Prop Money Stack | Iron & Glass Yellow Notes',
+    metaDescription: 'Order €200 Euro prop money stack (100 notes). Industrial iron-and-glass yellow architecture for high-stakes film scenes.',
+    intentCategory: 'denominations',
+  },
+  {
+    keyword: '500 euro prop money',
+    normalized: '500 euro prop money',
+    targetView: 'product',
+    productId: 'euro-500-stack',
+    metaTitle: 'Buy €500 Euro Prop Money Stack | Discontinued Purple Note Legend',
+    metaDescription: 'Order €500 Euro prop money stack (100 notes). Modern 20th-century purple architecture icon for crime syndicate and robbery scenes.',
+    intentCategory: 'denominations',
+  },
+  {
+    keyword: 'fake money 100 bills',
+    normalized: 'fake money 100 bills',
+    targetView: 'product',
+    productId: 'euro-100-stack',
+    metaTitle: 'Fake Money 100 Bills | 100-Note Banded Euro Stacks',
+    metaDescription: 'Buy 100-bill fake money stacks. Standardized studio kraft paper bands with €10,000 face value prop labels.',
+    intentCategory: 'denominations',
+  },
+
+  // --- LEGAL & COMPLIANCE QUESTIONS ---
+  {
+    keyword: 'is prop money legal',
+    normalized: 'is prop money legal',
+    targetView: 'compliance',
+    metaTitle: 'Is Prop Money Legal? | ECB Decision 2013/10 Legal Guide',
+    metaDescription: 'Learn why prop money is legal under European Central Bank Decision 2013/10. Safe harbor guidelines, scale variance, and non-counterfeit standards explained.',
+    intentCategory: 'legal',
+  },
+  {
+    keyword: 'is it illegal to buy prop money',
+    normalized: 'is it illegal to buy prop money',
+    targetView: 'compliance',
+    metaTitle: 'Is It Illegal to Buy Prop Money? | EU Law & Safe Harbor',
+    metaDescription: 'Buying certified prop money is 100% legal for motion picture, media, and promotional productions when complying with ECB Article 2 guidelines.',
+    intentCategory: 'legal',
+  },
+  {
+    keyword: 'is prop money counterfeit',
+    normalized: 'is prop money counterfeit',
+    targetView: 'compliance',
+    metaTitle: 'Is Prop Money Counterfeit? | Key Differences & Legal Rules',
+    metaDescription: 'Prop money is not counterfeit money. Learn the legal distinctions: non-fluorescent paper, size variance, and required "PROP SPECIMEN" text.',
+    intentCategory: 'legal',
+  },
+  {
+    keyword: 'can you spend prop money',
+    normalized: 'can you spend prop money',
+    targetView: 'compliance',
+    metaTitle: 'Can You Spend Prop Money? | Strict Legal Safe Harbor Warning',
+    metaDescription: 'No, prop money cannot be spent in commerce. Attempting to spend prop money is illegal. Prop money is strictly for motion pictures and entertainment.',
+    intentCategory: 'legal',
+  },
+  {
+    keyword: 'is prop money worth anything',
+    normalized: 'is prop money worth anything',
+    targetView: 'compliance',
+    metaTitle: 'Is Prop Money Worth Anything? | Production Value Explained',
+    metaDescription: 'Prop money has zero financial currency value but high production value for filmmakers, prop masters, and content creators.',
+    intentCategory: 'legal',
+  },
+  {
+    keyword: 'using prop money to buy stuff',
+    normalized: 'using prop money to buy stuff',
+    targetView: 'compliance',
+    metaTitle: 'Using Prop Money to Buy Stuff | Legal Warning & Guidelines',
+    metaDescription: 'Warning: Using prop money in commercial transactions is illegal. All CINE EURO notes carry permanent "FOR MOTION PICTURE USE ONLY" imprints.',
+    intentCategory: 'legal',
+  },
+  {
+    keyword: 'what is prop money used for',
+    normalized: 'what is prop money used for',
+    targetView: 'compliance',
+    metaTitle: 'What is Prop Money Used For? | Film, TV & Media Production',
+    metaDescription: 'Prop money is used by filmmakers, theater groups, music video directors, and photographers to safely simulate large cash transactions on camera.',
+    intentCategory: 'legal',
+  },
+  {
+    keyword: 'what is prop money',
+    normalized: 'what is prop money',
+    targetView: 'compliance',
+    metaTitle: 'What is Prop Money? | Definition & Film Industry Standards',
+    metaDescription: 'Prop money refers to legal, non-counterfeit reproduction banknotes created specifically for television, film, and media productions.',
+    intentCategory: 'legal',
+  },
+
+  // --- QUALITY & SPECIFICATIONS ---
+  {
+    keyword: 'prop money euro with hologram',
+    normalized: 'prop money euro with hologram',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro with Hologram Effect | Camera Calibrated',
+    metaDescription: 'Buy Euro prop money with non-glare optical foil and simulated metallic striping for high-definition close-up lens shots.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'prop money euro hologram',
+    normalized: 'prop money euro hologram',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro Hologram Effect | High Definition Stacks',
+    metaDescription: 'Camera-tested Euro prop money featuring specialized non-reflective foil stripes designed for ARRI ALEXA and RED digital cinema cameras.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'where to buy prop money euro with hologram',
+    normalized: 'where to buy prop money euro with hologram',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Where to Buy Prop Money Euro with Hologram | CINE EURO EU',
+    metaDescription: 'Where to buy Euro prop money with hologram effects: Order directly from CINE EURO for 24h soundstage courier dispatch across Europe.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'prop money euro high quality',
+    normalized: 'prop money euro high quality',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'High Quality Prop Money Euro | 120gsm Anti-Glare Cellulose',
+    metaDescription: 'High quality Euro prop money crafted with 120gsm matte cellulose stock and anti-specular coating for 8K video resolution.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'prop money euro haute qualité',
+    normalized: 'prop money euro haute qualite',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro Haute Qualité | Billets Factices de Cinéma',
+    metaDescription: 'Prop money euro haute qualité conformes à la réglementation BCE 2013/10. Livraison rapide pour tournages de films en France et en Europe.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'prop money euro realistic',
+    normalized: 'prop money euro realistic',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Realistic Prop Money Euro | Cinema Grade Banknotes',
+    metaDescription: 'Ultra-realistic Euro prop money with dual-sided printing, authentic color calibration, and proper paper tactile weight.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'euro prop money realistic',
+    normalized: 'euro prop money realistic',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Euro Prop Money Realistic | On-Camera Tested Stacks',
+    metaDescription: 'Realistic Euro prop cash engineered for film sets. Passed Macro lens camera tests with clear ECB safe harbor compliance.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'most realistic euro prop money',
+    normalized: 'most realistic euro prop money',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Most Realistic Euro Prop Money | CINE EURO Studio Props',
+    metaDescription: 'Discover the most realistic Euro prop money on the market. Non-reflective 120gsm cellulose paper with authentic band wrapping.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'most realistic prop money euro',
+    normalized: 'most realistic prop money euro',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Most Realistic Prop Money Euro | Official Studio Supplier',
+    metaDescription: 'Order the most realistic prop money euro stacks. Engineered specifically for film directors, prop masters, and content creators.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'prop money euro real size',
+    normalized: 'prop money euro real size',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro Real Size | Disproportionate Scale Guide',
+    metaDescription: 'Learn how legal prop money euro dimensions balance visual on-camera proportion with ECB legal scale rules.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: '1 1 prop money',
+    normalized: '1 1 prop money',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: '1 1 Prop Money Euro | Cinematic Proportion Stacks',
+    metaDescription: 'Order 1:1 visually proportioned Euro prop money stacks for realistic cash counting scenes and heist sequences.',
+    intentCategory: 'quality',
+  },
+  {
+    keyword: 'aged prop money',
+    normalized: 'aged prop money',
+    targetView: 'product',
+    productId: 'aged-weathered-action-crime-notes',
+    metaTitle: 'Buy Aged & Weathered Prop Money | Distressed Action Notes',
+    metaDescription: 'Buy hand-weathered aged prop money notes. Pre-crinkled, stained, and distressed for gritty crime thrillers and vintage period films.',
+    intentCategory: 'quality',
+  },
+
+  // --- BUNDLES, CASES & SPECIAL PRODUCTS ---
+  {
+    keyword: 'fake cash bundles',
+    normalized: 'fake cash bundles',
+    targetView: 'shop',
+    categoryFilter: 'stunt',
+    metaTitle: 'Buy Fake Cash Bundles | Multi-Denomination Stunt Packs',
+    metaDescription: 'Order fake cash bundles containing €5, €10, €20, €50, and €100 prop banknote stacks for studio vault scenes.',
+    intentCategory: 'bundles',
+  },
+  {
+    keyword: 'fake cash stacks',
+    normalized: 'fake cash stacks',
+    targetView: 'shop',
+    categoryFilter: 'stunt',
+    metaTitle: 'Fake Cash Stacks | 100-Bill Banded Prop Currency',
+    metaDescription: 'High-density fake cash stacks banded in official studio kraft paper straps for cash drops and briefcase reveals.',
+    intentCategory: 'bundles',
+  },
+  {
+    keyword: 'fake cash prop',
+    normalized: 'fake cash prop',
+    targetView: 'shop',
+    categoryFilter: 'stunt',
+    metaTitle: 'Fake Cash Prop Bundles | Studio Grade Movie Money',
+    metaDescription: 'Professional fake cash prop bundles for film shoots, television productions, and creative social media content.',
+    intentCategory: 'bundles',
+  },
+  {
+    keyword: 'euro prop movie money',
+    normalized: 'euro prop movie money',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Euro Prop Movie Money | Official Film Set Banknotes',
+    metaDescription: 'Euro prop movie money designed for major film studios. Compliant with ECB Decision 2013/10 with express courier dispatch.',
+    intentCategory: 'bundles',
+  },
+  {
+    keyword: 'directors prop money suitcase',
+    normalized: 'directors prop money suitcase',
+    targetView: 'product',
+    productId: 'directors-euro-prop-money-suitcase',
+    metaTitle: 'Buy €1,000,000 Director Prop Money Suitcase | Aluminum Hero Briefcase',
+    metaDescription: 'Order full €1,000,000 Euro prop money flight case. Premium lockable aluminum case pre-filled with 100 banded €500 prop stacks.',
+    intentCategory: 'bundles',
+  },
+  {
+    keyword: 'tactical heist duffel bag',
+    normalized: 'tactical heist duffel bag',
+    targetView: 'product',
+    productId: 'tactical-heist-duffel-bag',
+    metaTitle: 'Buy €250,000 Tactical Heist Duffel Bag | Complete Movie Prop Set',
+    metaDescription: 'Buy €250,000 tactical heist duffel bag packed with 25 mixed Euro prop banknote stacks for crime scenes.',
+    intentCategory: 'bundles',
+  },
+
+  // --- MARKETPLACE COMPARISONS & INTENT ---
+  {
+    keyword: 'prop money euro amazon',
+    normalized: 'prop money euro amazon',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro vs Amazon | Why Studio Grade Props Win',
+    metaDescription: 'Compare cheap Amazon prop money with CINE EURO studio-grade cellulose notes. Zero specular glare, 8K ready, and legal ECB safe harbor certified.',
+    intentCategory: 'comparison',
+  },
+  {
+    keyword: 'prop money euro temu',
+    normalized: 'prop money euro temu',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro vs Temu | Professional Film Props EU',
+    metaDescription: 'Avoid illegal or low-quality Temu prop money. CINE EURO provides 100% legal ECB 2013/10 certified prop notes with express 24h shipping.',
+    intentCategory: 'comparison',
+  },
+  {
+    keyword: 'prop money euro reddit',
+    normalized: 'prop money euro reddit',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro Reddit Recommended | Top Prop Master Pick',
+    metaDescription: 'Top Reddit prop master recommended Euro prop currency supplier. Rated #1 for camera calibration, paper quality, and legal safety.',
+    intentCategory: 'comparison',
+  },
+  {
+    keyword: 'prop money euro alibaba',
+    normalized: 'prop money euro alibaba',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro vs Alibaba | Verified European Supplier',
+    metaDescription: 'Skip customs seizures on Alibaba prop money. CINE EURO ships directly from Berlin with EU customs clearance included.',
+    intentCategory: 'comparison',
+  },
+  {
+    keyword: 'prop money euro ebay',
+    normalized: 'prop money euro ebay',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro eBay Alternative | Guaranteed Legal Props',
+    metaDescription: 'Order certified Euro prop money directly from CINE EURO. Guaranteed compliance under ECB Decision 2013/10 with studio invoicing.',
+    intentCategory: 'comparison',
+  },
+  {
+    keyword: 'prop money euro aliexpress',
+    normalized: 'prop money euro aliexpress',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro AliExpress Alternative | Fast EU Dispatch',
+    metaDescription: 'Don’t risk set delays with AliExpress shipping. Get 24-hour express courier delivery across Europe from CINE EURO.',
+    intentCategory: 'comparison',
+  },
+  {
+    keyword: 'where to buy prop money euro',
+    normalized: 'where to buy prop money euro',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Where to Buy Prop Money Euro | CINE EURO Official Store',
+    metaDescription: 'Where to buy Euro prop money: CINE EURO is Europe’s premier supplier of legal, camera-tested prop currency for film, TV, and media.',
+    intentCategory: 'buying',
+  },
+  {
+    keyword: 'where to buy prop money',
+    normalized: 'where to buy prop money',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Where to Buy Prop Money | CINE EURO Film Prop Supply',
+    metaDescription: 'Discover where to buy certified movie prop money. Fast 24-hour dispatch to soundstages in Berlin, Paris, London, and worldwide.',
+    intentCategory: 'buying',
+  },
+
+  // --- GENERAL SEARCH TERMS ---
+  {
+    keyword: 'european prop money',
+    normalized: 'european prop money',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'European Prop Money | Official Studio Supplier EU',
+    metaDescription: 'European prop money manufactured strictly under European Central Bank standards. Complete set of €5, €10, €20, €50, €100, €200, and €500 stacks.',
+    intentCategory: 'general',
+  },
+  {
+    keyword: 'europe prop money',
+    normalized: 'europe prop money',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Europe Prop Money | Legal Banknote Reproductions',
+    metaDescription: 'Leading Europe prop money store for film studios, directors, and creators with fast EU express shipping.',
+    intentCategory: 'general',
+  },
+  {
+    keyword: 'euro prop cash',
+    normalized: 'euro prop cash',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Euro Prop Cash | Studio Grade Banknote Stacks',
+    metaDescription: 'Euro prop cash notes engineered for high-definition 8K film lenses and virtual production LED screens.',
+    intentCategory: 'general',
+  },
+  {
+    keyword: 'prop cash euro',
+    normalized: 'prop cash euro',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Cash Euro | High Density Banknote Bundles',
+    metaDescription: 'Buy prop cash euro notes. High-density paper weight with authentic feel and non-reflective coating.',
+    intentCategory: 'general',
+  },
+  {
+    keyword: 'best euro prop money',
+    normalized: 'best euro prop money',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Best Euro Prop Money | Top Rated Film Prop Supplier',
+    metaDescription: 'Voted best Euro prop money by European prop masters and cinematographers for 8K resolution performance.',
+    intentCategory: 'general',
+  },
+  {
+    keyword: 'best prop money euro',
+    normalized: 'best prop money euro',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Best Prop Money Euro | CINE EURO Studio Grade Notes',
+    metaDescription: 'Shop the best prop money euro bundles. Double-sided, crisp vault finish, and legal ECB safe harbor markings.',
+    intentCategory: 'general',
+  },
+  {
+    keyword: 'prop money euro bills',
+    normalized: 'prop money euro bills',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro Bills | Complete Denomination Range',
+    metaDescription: 'Full collection of prop money euro bills available in 100-note banded stacks from €5 to €500.',
+    intentCategory: 'general',
+  },
+  {
+    keyword: 'prop money euro price',
+    normalized: 'prop money euro price',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'Prop Money Euro Price & Volume Discounts | CINE EURO',
+    metaDescription: 'Transparent prop money euro pricing with volume discount tiers up to 40% off for feature film productions.',
+    intentCategory: 'general',
+  },
+  {
+    keyword: 'how much is prop money',
+    normalized: 'how much is prop money',
+    targetView: 'shop',
+    categoryFilter: 'all',
+    metaTitle: 'How Much is Prop Money? | Pricing & Tier Discounts',
+    metaDescription: 'Prop money stacks start from €99 for single 100-note bundles with quantity discounts up to 40% off.',
+    intentCategory: 'general',
+  },
+];
+
+/**
+ * Fuzzy search resolution helper: matches any raw query phrase against the 130+ mapped keywords
+ */
+export function resolveKeywordQuery(rawQuery: string): KeywordTarget | undefined {
+  if (!rawQuery) return undefined;
+  const clean = rawQuery.trim().toLowerCase().replace(/[^a-z0-9\s]/g, '');
+
+  // 1. Direct exact match
+  const exact = KEYWORD_MAP.find((k) => k.normalized === clean || k.keyword.toLowerCase() === clean);
+  if (exact) return exact;
+
+  // 2. Contains match
+  const match = KEYWORD_MAP.find(
+    (k) => clean.includes(k.normalized) || k.normalized.includes(clean)
+  );
+  if (match) return match;
+
+  // 3. Word tokens match
+  const tokens = clean.split(/\s+/).filter(Boolean);
+  if (tokens.length > 0) {
+    const tokenMatch = KEYWORD_MAP.find((k) =>
+      tokens.every((t) => k.normalized.includes(t))
+    );
+    if (tokenMatch) return tokenMatch;
+  }
+
+  return undefined;
+}

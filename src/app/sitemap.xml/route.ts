@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { PRODUCTS } from '../../data/products';
 import { BLOG_POSTS } from '../../data/blog';
+import { KEYWORD_MAP } from '../../data/keywordMapping';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -24,6 +25,12 @@ export async function GET() {
     changefreq: 'weekly',
   }));
 
+  const keywordPages = KEYWORD_MAP.map((item) => ({
+    url: `${baseUrl}/shop?q=${encodeURIComponent(item.keyword)}`,
+    priority: '0.8',
+    changefreq: 'weekly',
+  }));
+
   const productPages = PRODUCTS.map((product) => ({
     url: `${baseUrl}/products/${product.slug || product.id}`,
     priority: '0.85',
@@ -36,7 +43,7 @@ export async function GET() {
     changefreq: 'monthly',
   }));
 
-  const allUrls = [...staticPages, ...categoryFilters, ...productPages, ...blogPages];
+  const allUrls = [...staticPages, ...categoryFilters, ...keywordPages, ...productPages, ...blogPages];
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

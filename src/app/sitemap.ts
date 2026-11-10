@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { PRODUCTS } from '../data/products';
 import { BLOG_POSTS } from '../data/blog';
+import { KEYWORD_MAP } from '../data/keywordMapping';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://europropmoney.de';
@@ -54,6 +55,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  // Mapped Keyword Influx Landing Targets (Top High-Volume Searches)
+  const keywordRoutes: MetadataRoute.Sitemap = KEYWORD_MAP.map((item) => ({
+    url: `${baseUrl}/shop?q=${encodeURIComponent(item.keyword)}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
   // Individual Product Pages
   const productPages: MetadataRoute.Sitemap = PRODUCTS.map((product) => ({
     url: `${baseUrl}/products/${product.slug || product.id}`,
@@ -70,5 +79,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  return [...staticPages, ...categoryRoutes, ...productPages, ...blogPages];
+  return [...staticPages, ...categoryRoutes, ...keywordRoutes, ...productPages, ...blogPages];
 }

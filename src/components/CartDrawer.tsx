@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'motion/react';
 import { 
   X, 
@@ -193,9 +194,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     className="flex gap-3.5 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors"
                   >
                     {/* Thumbnail */}
-                    <img
+                    <Image
                       src={item.product.image}
                       alt={item.product.name}
+                      width={64}
+                      height={64}
                       referrerPolicy="no-referrer"
                       onClick={() => {
                         if (onSelectProduct) {

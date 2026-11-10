@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { ShoppingBag, ShieldCheck, Menu, X, Zap, Phone, ChevronDown, Layers, Briefcase, Sparkles } from 'lucide-react';
+import { ShoppingBag, ShieldCheck, Menu, X, Zap, Phone, ChevronDown, Layers, Briefcase, Sparkles, Search } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { SiteLogo } from './SiteLogo';
 import { Link, useRouter } from '../router';
+
+import { useIsMounted } from '../hooks/useIsMounted';
 
 interface HeaderProps {
   currentPage: string;
@@ -19,7 +21,8 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const { getItemCount, setIsOpen } = useCartStore();
   const { navigateToCategory } = useRouter();
-  const itemCount = getItemCount();
+  const mounted = useIsMounted();
+  const itemCount = mounted ? getItemCount() : 0;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
   const [mobileShopSubmenuOpen, setMobileShopSubmenuOpen] = useState(false);
@@ -48,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
-            className="md:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+            className="md:hidden min-w-[48px] min-h-[48px] flex items-center justify-center text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -214,6 +217,27 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Zone 3: CTA & Cart Drawer Trigger */}
         <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+          {/* Live Search Input Bar */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const input = (e.currentTarget.elements.namedItem('headerSearch') as HTMLInputElement)?.value;
+              if (input && input.trim()) {
+                onNavigate('shop');
+                window.location.href = `/shop?q=${encodeURIComponent(input.trim())}`;
+              }
+            }}
+            className="hidden lg:flex items-center relative max-w-xs"
+          >
+            <input
+              type="text"
+              name="headerSearch"
+              placeholder="Search (e.g. euro prop money, kaufen)..."
+              className="w-48 xl:w-56 bg-slate-100 border border-slate-300 rounded-lg py-1.5 pl-8 pr-3 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-500 focus:bg-white transition-all font-sans"
+            />
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 pointer-events-none" />
+          </form>
+
           {/* Order Now Link */}
           <Link
             to="/shop"
@@ -228,7 +252,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => setIsOpen(true)}
             aria-label={`Open shopping cart with ${itemCount} items`}
-            className="relative flex items-center gap-2 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-900 bg-slate-100 border border-slate-200 rounded-lg hover:bg-slate-200 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            className="relative flex items-center justify-center min-h-[44px] gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-slate-900 bg-slate-100 border border-slate-200 rounded-lg hover:bg-slate-200 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
           >
             <ShoppingBag className="w-4 h-4 text-amber-600" />
             <span className="hidden lg:inline">Cart</span>

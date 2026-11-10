@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { ShieldCheck, Video, Clock, Truck, FileCheck } from 'lucide-react';
 
 interface StudioTrustSectionProps {
@@ -18,11 +19,13 @@ export const StudioTrustSection: React.FC<StudioTrustSectionProps> = ({
       <div className="relative w-full py-16 lg:py-24 overflow-hidden bg-slate-900">
         {/* Background Cover Image ending strictly before Testimonials */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <img
+          <Image
             src="https://lh3.googleusercontent.com/d/1VDf-8HdkB1RscU6O3kgxKN5MSq9LKaFa=s0"
             alt="Built To Withstand 8K Lenses And Customs Audits Background"
-            className="w-full h-full object-cover object-center"
-            loading="eager"
+            fill
+            sizes="100vw"
+            referrerPolicy="no-referrer"
+            className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-slate-950/25" />
         </div>

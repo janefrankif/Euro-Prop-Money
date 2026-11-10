@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Layers, Briefcase, Sparkles, ArrowRight } from 'lucide-react';
 import { Link } from '../router';
 
@@ -73,12 +74,15 @@ export const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCate
                 <div>
                   {/* Category Image Header */}
                   <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-slate-950">
-                    <img 
+                    <Image 
                       src={cat.image} 
                       alt={cat.title}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" 
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      referrerPolicy="no-referrer"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none" />
                     
                     {/* Badge Overlay */}
                     <div className="absolute top-3 right-3 z-10">

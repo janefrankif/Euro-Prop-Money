@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { X, Calendar, Clock, Tag, ShieldCheck } from 'lucide-react';
 import { BlogPost } from '../data/blog';
 
@@ -12,8 +13,35 @@ interface BlogModalProps {
 export const BlogModal: React.FC<BlogModalProps> = ({ post, onClose }) => {
   if (!post) return null;
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.summary,
+    datePublished: post.date,
+    image: post.image,
+    author: {
+      '@type': 'Organization',
+      name: 'Euro Prop Money Editorial Board',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Euro Prop Money EU',
+      logo: 'https://europropmoney.de/hero_cover_hd.jpg',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://europropmoney.de/blog/${post.slug || post.id}`,
+    },
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-md overflow-y-auto">
+      <script
+        id="blog-article-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <div className="relative w-full max-w-3xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden my-auto flex flex-col max-h-[92vh]">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
@@ -34,8 +62,15 @@ export const BlogModal: React.FC<BlogModalProps> = ({ post, onClose }) => {
         <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
           {post.image && (
             <div className="relative w-full h-52 sm:h-64 rounded-xl overflow-hidden bg-slate-950 mb-6 shadow-md">
-              <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+              <Image
+                src={post.image}
+                alt={post.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 768px"
+                referrerPolicy="no-referrer"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-3 left-3 right-3 text-white">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-400 text-slate-950 px-2 py-0.5 rounded">
                   {post.category}

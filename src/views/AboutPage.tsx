@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Film, ShieldCheck, Truck, Award, Users, CheckCircle, ArrowRight, Video, FileText, MapPin } from 'lucide-react';
 import { HERO_IMAGE } from '../data/products';
 import { Link } from '../router';
@@ -66,15 +67,14 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-xl">
-              <img
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-xl">
+              <Image
                 src={HERO_IMAGE}
                 alt="Cinema set camera testing Euro prop money"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = 'https://lh3.googleusercontent.com/d/1hivs0TD-lQnB3h7D5Qo67tWhr-j-qhZS';
-                }}
+                className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 right-4 bg-slate-950/85 backdrop-blur-md p-3 rounded-lg border border-slate-800 text-[11px] font-mono text-slate-200">

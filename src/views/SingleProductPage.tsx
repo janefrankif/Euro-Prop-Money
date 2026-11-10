@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { 
   ShieldCheck, 
   ShoppingBag, 
@@ -137,6 +138,69 @@ export const SingleProductPage: React.FC<SingleProductPageProps> = ({
         </div>
       </div>
 
+      {/* Product & Breadcrumb Schema.org Structured Data */}
+      <script
+        id="product-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: product.name,
+            image: [product.image, ...(product.gallery || [])],
+            description: product.description,
+            sku: product.id,
+            brand: {
+              '@type': 'Brand',
+              name: 'CINE EURO',
+            },
+            offers: {
+              '@type': 'Offer',
+              url: `https://europropmoney.de/products/${product.slug || product.id}`,
+              priceCurrency: 'EUR',
+              price: product.price.toFixed(2),
+              availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+              itemCondition: 'https://schema.org/NewCondition',
+            },
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: '5.0',
+              reviewCount: '48',
+            },
+          }),
+        }}
+      />
+      <script
+        id="breadcrumb-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://europropmoney.de/',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Shop',
+                item: 'https://europropmoney.de/shop',
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: product.name,
+                item: `https://europropmoney.de/products/${product.slug || product.id}`,
+              },
+            ],
+          }),
+        }}
+      />
+
       {/* Production Soundstage Notice */}
       <div className="w-full bg-amber-50 border-b border-amber-200 py-2 px-4 text-center">
         <p className="text-xs font-mono text-amber-900">
@@ -154,7 +218,7 @@ export const SingleProductPage: React.FC<SingleProductPageProps> = ({
             <div className="relative rounded-2xl bg-slate-950 border border-slate-300 overflow-hidden shadow-xl aspect-[4/3] group">
               {/* Product Image */}
               {!imageError ? (
-                <img
+                <Image
                   src={
                     activeImageIndex === 1 && product.gallery && product.gallery[0]
                       ? product.gallery[0]
@@ -165,8 +229,12 @@ export const SingleProductPage: React.FC<SingleProductPageProps> = ({
                       : product.image
                   }
                   alt={product.name}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                  referrerPolicy="no-referrer"
                   onError={() => setImageError(true)}
-                  className={`w-full h-full object-cover object-center transition-all duration-500 ${
+                  className={`object-cover object-center transition-all duration-500 ${
                     lensMode === 'tungsten' ? 'sepia-[0.35] brightness-95 contrast-105' : ''
                   } ${
                     lensMode === 'macro' ? 'scale-125 origin-center' : 'scale-100'
@@ -261,8 +329,15 @@ export const SingleProductPage: React.FC<SingleProductPageProps> = ({
                         : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                     }`}
                   >
-                    <div className="w-full h-12 rounded-lg overflow-hidden mb-1.5 bg-slate-950">
-                      <img src={thumbImg} alt={view.label} className="w-full h-full object-cover" />
+                    <div className="relative w-full h-12 rounded-lg overflow-hidden mb-1.5 bg-slate-950">
+                      <Image
+                        src={thumbImg}
+                        alt={view.label}
+                        fill
+                        sizes="120px"
+                        referrerPolicy="no-referrer"
+                        className="object-cover"
+                      />
                     </div>
                     <span className="text-[10px] font-bold text-slate-900 block truncate">{view.label}</span>
                   </button>
@@ -857,12 +932,15 @@ export const SingleProductPage: React.FC<SingleProductPageProps> = ({
       </div>
 
       {/* 5. Mobile Sticky Bottom Purchase Bar */}
-      <div className="lg:hidden fixed bottom-14 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2.5 flex items-center justify-between gap-3 shadow-xl">
+      <div className="lg:hidden fixed bottom-14 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 flex items-center justify-between gap-3 shadow-xl">
         <div className="flex items-center gap-2.5 min-w-0">
-          <img
+          <Image
             src={product.image}
-            alt=""
-            className="w-10 h-10 rounded-lg object-cover border border-slate-200 shrink-0 bg-slate-100"
+            alt={product.name}
+            width={44}
+            height={44}
+            referrerPolicy="no-referrer"
+            className="w-11 h-11 rounded-lg object-cover border border-slate-200 shrink-0 bg-slate-100"
           />
           <div className="truncate">
             <span className="text-xs font-bold text-slate-900 block truncate">{product.name}</span>
@@ -872,7 +950,7 @@ export const SingleProductPage: React.FC<SingleProductPageProps> = ({
 
         <button
           onClick={handleAddToCart}
-          className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg shrink-0 flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+          className="min-h-[48px] px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg shrink-0 flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
         >
           <ShoppingBag className="w-4 h-4 stroke-[2.5]" />
           <span>Add to Cart</span>

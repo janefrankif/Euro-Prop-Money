@@ -87,7 +87,7 @@ export const AnnouncementBar: React.FC = () => {
           <button
             onClick={nextAnnouncement}
             aria-label="Next announcement"
-            className="p-1 text-slate-400 hover:text-white transition-colors cursor-pointer"
+            className="min-w-[40px] min-h-[40px] flex items-center justify-center p-1 text-slate-400 hover:text-white transition-colors cursor-pointer"
           >
             <ChevronRight className="w-3.5 h-3.5" />
           </button>

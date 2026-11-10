@@ -1,49 +1,9 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { ArrowRight, ShieldCheck, Zap, Video, Award, Layers } from 'lucide-react';
 import heroCoverLocal from '../assets/images/hero_cover.jpg';
-
-// Google Drive stream CDN URL corresponding to 1KF3WYnQ9j_H7sIdIAwM6pSflQhBdvgSH/view?usp=sharing
-const NEW_HERO_IMAGE_URL = 'https://lh3.googleusercontent.com/d/1KF3WYnQ9j_H7sIdIAwM6pSflQhBdvgSH';
-
-const heroCoverLocalSrc =
-  typeof heroCoverLocal === 'string'
-    ? heroCoverLocal
-    : (heroCoverLocal as unknown as { src?: string })?.src || '';
-
-// Next.js-compatible Image component implementation for Vite/React SPA environment
-interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  fill?: boolean;
-  priority?: boolean;
-  quality?: number;
-}
-
-const Image: React.FC<ImageProps> = ({ 
-  fill, 
-  priority = false, 
-  className = '', 
-  src, 
-  alt = '', 
-  ...props 
-}) => {
-  return (
-    <img
-      src={src}
-      alt={alt}
-      loading={priority ? 'eager' : 'lazy'}
-      decoding="async"
-      className={`${fill ? 'absolute inset-0 w-full h-full' : ''} ${className}`}
-      onError={(e) => {
-        // Fallback to locally cached copy if direct Drive URL is inaccessible
-        if (heroCoverLocalSrc && (e.currentTarget as HTMLImageElement).src !== heroCoverLocalSrc) {
-          (e.currentTarget as HTMLImageElement).src = heroCoverLocalSrc;
-        }
-      }}
-      {...props}
-    />
-  );
-};
 
 interface HeroSectionProps {
   onScrollToCatalog: () => void;
@@ -56,12 +16,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   return (
     <section className="relative w-full h-screen overflow-hidden flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-      {/* 1. Full-Cover Hero Background Image via Next.js-style <Image> with fill & priority */}
+      {/* 1. Full-Cover Hero Background Image via Next.js <Image> with fill & priority */}
       <Image
-        src={heroCoverLocalSrc || NEW_HERO_IMAGE_URL}
+        src={heroCoverLocal}
         alt="prop money euro"
         fill
-        priority={true}
+        priority
+        sizes="100vw"
+        quality={85}
+        referrerPolicy="no-referrer"
         className="object-cover object-center"
       />
 
@@ -94,7 +57,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-5">
           <button
             onClick={onScrollToCatalog}
-            className="flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-950 bg-amber-400 rounded-xl hover:bg-amber-300 transition-all cursor-pointer whitespace-nowrap shadow-lg hover:shadow-amber-400/20 active:scale-[0.98] group"
+            className="flex items-center justify-center min-h-[48px] gap-2 px-6 py-3.5 sm:px-8 sm:py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-950 bg-amber-400 rounded-xl hover:bg-amber-300 transition-all cursor-pointer whitespace-nowrap shadow-lg hover:shadow-amber-400/20 active:scale-[0.98] group"
           >
             <span>Order Prop Currency</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -102,7 +65,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           <button
             onClick={onScrollToCatalog}
-            className="flex items-center justify-center gap-2 px-5 py-3 sm:px-7 sm:py-3.5 text-xs sm:text-sm font-semibold text-white bg-white/10 backdrop-blur-md border border-white/25 rounded-xl hover:bg-white/20 hover:border-white/40 transition-all cursor-pointer whitespace-nowrap shadow-md"
+            className="flex items-center justify-center min-h-[48px] gap-2 px-5 py-3.5 sm:px-7 sm:py-4 text-xs sm:text-sm font-semibold text-white bg-white/10 backdrop-blur-md border border-white/25 rounded-xl hover:bg-white/20 hover:border-white/40 transition-all cursor-pointer whitespace-nowrap shadow-md"
           >
             <Layers className="w-4 h-4 text-amber-400" />
             <span>Browse All Denominations</span>
